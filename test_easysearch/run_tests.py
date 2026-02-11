@@ -1,20 +1,17 @@
 #!/usr/bin/env python
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from __future__ import print_function
 
@@ -31,13 +28,13 @@ def fetch_es_repo():
 
     repo_path = environ.get(
         "TEST_ES_REPO",
-        abspath(join(dirname(__file__), pardir, pardir, "elasticsearch")),
+        abspath(join(dirname(__file__), pardir, pardir, "easysearch")),
     )
 
     # no repo
     if not exists(repo_path) or not exists(join(repo_path, ".git")):
         subprocess.check_call(
-            "git clone https://github.com/elastic/elasticsearch %s" % repo_path,
+            "git clone https://github.com/infinilabs/easysearch %s" % repo_path,
             shell=True,
         )
 
@@ -50,21 +47,21 @@ def fetch_es_repo():
     if environ.get("TEST_ES_NOFETCH", False):
         return
 
-    from test_elasticsearch.test_server import get_client
-    from test_elasticsearch.test_cases import SkipTest
+    from test_easysearch.test_server import get_client
+    from test_easysearch.test_cases import SkipTest
 
     # find out the sha of the running es
     try:
         es = get_client()
         sha = es.info()["version"]["build_hash"]
     except (SkipTest, KeyError):
-        print("No running elasticsearch >1.X server...")
+        print("No running easysearch >1.X server...")
         return
 
     # fetch new commits to be sure...
-    print("Fetching elasticsearch repo...")
+    print("Fetching easysearch repo...")
     subprocess.check_call(
-        "cd %s && git fetch https://github.com/elastic/elasticsearch.git" % repo_path,
+        "cd %s && git fetch https://github.com/infinilabs/easysearch.git" % repo_path,
         shell=True,
     )
     # reset to the version from info()
@@ -82,11 +79,11 @@ def run_all(argv=None):
     # always insert coverage when running tests
     if argv is None:
         junit_xml = join(
-            abspath(dirname(dirname(__file__))), "junit", "elasticsearch-py-junit.xml"
+            abspath(dirname(dirname(__file__))), "junit", "easysearch-py-junit.xml"
         )
         argv = [
             "pytest",
-            "--cov=elasticsearch",
+            "--cov=easysearch",
             "--junitxml=%s" % junit_xml,
             "--log-level=DEBUG",
             "--cache-clear",
@@ -96,14 +93,14 @@ def run_all(argv=None):
         ignores = []
         # Python 3.6+ is required for async
         if sys.version_info < (3, 6):
-            ignores.append("test_elasticsearch/test_async/")
+            ignores.append("test_easysearch/test_async/")
 
         # GitHub Actions, run non-server tests
         if "GITHUB_ACTION" in environ:
             ignores.extend(
                 [
-                    "test_elasticsearch/test_server/",
-                    "test_elasticsearch/test_async/test_server/",
+                    "test_easysearch/test_server/",
+                    "test_easysearch/test_async/test_server/",
                 ]
             )
         if ignores:

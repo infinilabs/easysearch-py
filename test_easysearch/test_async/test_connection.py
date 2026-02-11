@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import ssl
 import gzip
@@ -26,8 +23,8 @@ import aiohttp
 from multidict import CIMultiDict
 import pytest
 
-from elasticsearch import AIOHttpConnection
-from elasticsearch import __versionstr__
+from easysearch import AIOHttpConnection
+from easysearch import __versionstr__
 
 pytestmark = pytest.mark.asyncio
 
@@ -110,7 +107,7 @@ class TestAIOHttpConnection:
         # test with tuple
         con = AIOHttpConnection(
             cloud_id="cluster:dXMtZWFzdC0xLmF3cy5mb3VuZC5pbyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5NyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5Ng==",
-            api_key=("elastic", "changeme1"),
+            api_key=("admin", "changeme1"),
         )
         assert con.headers["authorization"] == "ApiKey ZWxhc3RpYzpjaGFuZ2VtZTE="
         assert (
@@ -201,7 +198,7 @@ class TestAIOHttpConnection:
 
     def test_default_user_agent(self):
         con = AIOHttpConnection()
-        assert con._get_default_user_agent() == "elasticsearch-py/%s (Python %s)" % (
+        assert con._get_default_user_agent() == "easysearch-py/%s (Python %s)" % (
             __versionstr__,
             python_version(),
         )
@@ -300,7 +297,7 @@ class TestAIOHttpConnection:
                     == str(w[0].message)
                 )
 
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.logger")
     async def test_uncompressed_body_logged(self, logger):
         con = await self._get_mock_connection(connection_params={"http_compress": True})
         await con.perform_request("GET", "/", body=b'{"example": "body"}')
@@ -315,4 +312,4 @@ class TestAIOHttpConnection:
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = await self._get_mock_connection(response_body=buf)
         status, headers, data = await con.perform_request("GET", "/")
-        assert u"你好\uda6a" == data
+        assert "你好\uda6a" == data

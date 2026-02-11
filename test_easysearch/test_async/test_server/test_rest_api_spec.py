@@ -1,31 +1,29 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 """
 Dynamically generated set of TestCases based on set of yaml files decribing
-some integration tests. These files are shared among all official Elasticsearch
+some integration tests. These files are shared among all official Easysearch
 clients.
 """
+
 import pytest
 import warnings
 import inspect
 
-from elasticsearch import RequestError, ElasticsearchDeprecationWarning
-from elasticsearch.helpers.test import _get_version
+from easysearch import RequestError, EasysearchDeprecationWarning
+from easysearch.helpers.test import _get_version
 from ...test_server.test_rest_api_spec import (
     YamlRunner,
     YAML_TEST_SPECS,
@@ -74,7 +72,7 @@ class AsyncYamlRunner(YamlRunner):
             await self.teardown()
 
     async def run_code(self, test):
-        """ Execute an instruction based on it's type. """
+        """Execute an instruction based on it's type."""
         print(test)
         for action in test:
             assert len(action) == 1
@@ -111,7 +109,7 @@ class AsyncYamlRunner(YamlRunner):
         for k in args:
             args[k] = self._resolve(args[k])
 
-        warnings.simplefilter("always", category=ElasticsearchDeprecationWarning)
+        warnings.simplefilter("always", category=EasysearchDeprecationWarning)
         with warnings.catch_warnings(record=True) as caught_warnings:
             try:
                 self.last_response = await api(**args)
@@ -129,7 +127,7 @@ class AsyncYamlRunner(YamlRunner):
         caught_warnings = [
             str(w.message)
             for w in caught_warnings
-            if w.category == ElasticsearchDeprecationWarning
+            if w.category == EasysearchDeprecationWarning
             and str(w.message) not in allowed_warnings
         ]
 

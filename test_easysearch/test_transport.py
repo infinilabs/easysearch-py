@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from __future__ import unicode_literals
 import json
 import time
 from mock import patch
 
-from elasticsearch.transport import Transport, get_host_info
-from elasticsearch.connection import Connection
-from elasticsearch.connection_pool import DummyConnectionPool
-from elasticsearch.exceptions import ConnectionError, TransportError
+from easysearch.transport import Transport, get_host_info
+from easysearch.connection import Connection
+from easysearch.connection_pool import DummyConnectionPool
+from easysearch.exceptions import ConnectionError, TransportError
 
 from .test_cases import TestCase
 
@@ -50,7 +47,7 @@ CLUSTER_NODES = """{
     "successful" : 1,
     "failed" : 0
   },
-  "cluster_name" : "elasticsearch",
+  "cluster_name" : "easysearch",
   "nodes" : {
     "SRZpKFZdQguhhvifmN6UVA" : {
       "name" : "SRZpKFZ",
@@ -75,7 +72,7 @@ CLUSTER_NODES_7x_PUBLISH_HOST = """{
     "successful" : 1,
     "failed" : 0
   },
-  "cluster_name" : "elasticsearch",
+  "cluster_name" : "easysearch",
   "nodes" : {
     "SRZpKFZdQguhhvifmN6UVA" : {
       "name" : "SRZpKFZ",
@@ -332,7 +329,7 @@ class TestTransport(TestCase):
         self.assertEqual(1, len(t.connection_pool.connections))
         self.assertEqual("http://1.1.1.1:123", t.get_connection().host)
 
-    @patch("elasticsearch.transport.Transport.sniff_hosts")
+    @patch("easysearch.transport.Transport.sniff_hosts")
     def test_sniff_on_fail_failing_does_not_prevent_retires(self, sniff_hosts):
         sniff_hosts.side_effect = [TransportError("sniff failed")]
         t = Transport(
@@ -383,7 +380,7 @@ class TestTransport(TestCase):
             {"host": "somehost.tld", "port": 123},
         )
 
-    @patch("elasticsearch.transport.Transport.sniff_hosts")
+    @patch("easysearch.transport.Transport.sniff_hosts")
     def test_sniffing_disabled_on_cloud_instances(self, sniff_hosts):
         t = Transport(
             [{}],

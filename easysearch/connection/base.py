@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import logging
 import binascii
@@ -31,17 +28,17 @@ except ImportError:
 from ..exceptions import (
     TransportError,
     ImproperlyConfigured,
-    ElasticsearchDeprecationWarning,
+    EasysearchDeprecationWarning,
     HTTP_EXCEPTIONS,
 )
 from .. import __versionstr__
 
-logger = logging.getLogger("elasticsearch")
+logger = logging.getLogger("easysearch")
 
-# create the elasticsearch.trace logger, but only set propagate to False if the
+# create the easysearch.trace logger, but only set propagate to False if the
 # logger hasn't already been configured
-_tracer_already_configured = "elasticsearch.trace" in logging.Logger.manager.loggerDict
-tracer = logging.getLogger("elasticsearch.trace")
+_tracer_already_configured = "easysearch.trace" in logging.Logger.manager.loggerDict
+tracer = logging.getLogger("easysearch.trace")
 if not _tracer_already_configured:
     tracer.propagate = False
 
@@ -50,7 +47,7 @@ _WARNING_RE = re.compile(r"\"([^\"]*)\"")
 
 class Connection(object):
     """
-    Class responsible for maintaining a connection to an Elasticsearch node. It
+    Class responsible for maintaining a connection to an Easysearch node. It
     holds persistent connection pool to it and it's main interface
     (`perform_request`) is thread-safe.
 
@@ -59,10 +56,10 @@ class Connection(object):
     :arg host: hostname of the node (default: localhost)
     :arg port: port to use (integer, default: 9200)
     :arg use_ssl: use ssl for the connection if `True`
-    :arg url_prefix: optional url prefix for elasticsearch
+    :arg url_prefix: optional url prefix for easysearch
     :arg timeout: default timeout in seconds (float, default: 10)
     :arg http_compress: Use gzip compression
-    :arg cloud_id: The Cloud ID from ElasticCloud. Convenient way to connect to cloud instances.
+    :arg cloud_id: The Cloud ID from EasysearchCloud. Convenient way to connect to cloud instances.
     :arg opaque_id: Send this value in the 'X-Opaque-Id' HTTP header
         For tracing all requests made by this transport.
     """
@@ -79,7 +76,7 @@ class Connection(object):
         cloud_id=None,
         api_key=None,
         opaque_id=None,
-        **kwargs
+        **kwargs,
     ):
 
         if cloud_id:
@@ -174,7 +171,7 @@ class Connection(object):
             return
 
         # Grab only the message from each header, the rest is discarded.
-        # Format is: '(number) Elasticsearch-(version)-(instance) "(message)"'
+        # Format is: '(number) Easysearch-(version)-(instance) "(message)"'
         warning_messages = []
         for header in warning_headers:
             # Because 'Requests' does it's own folding of multiple HTTP headers
@@ -190,7 +187,7 @@ class Connection(object):
                 warning_messages.append(header)
 
         for message in warning_messages:
-            warnings.warn(message, category=ElasticsearchDeprecationWarning)
+            warnings.warn(message, category=EasysearchDeprecationWarning)
 
     def _pretty_json(self, data):
         # pretty JSON in tracer curl logs
@@ -241,7 +238,7 @@ class Connection(object):
     def log_request_success(
         self, method, full_url, path, body, status_code, response, duration
     ):
-        """ Log a successful API call.  """
+        """Log a successful API call."""
         #  TODO: optionally pass in params instead of full_url and do urlencode only when needed
 
         # body has already been serialized to utf-8, deserialize it for logging
@@ -271,7 +268,7 @@ class Connection(object):
         response=None,
         exception=None,
     ):
-        """ Log an unsuccessful API call.  """
+        """Log an unsuccessful API call."""
         # do not log 404s on HEAD requests
         if method == "HEAD" and status_code == 404:
             return
@@ -300,7 +297,7 @@ class Connection(object):
             logger.debug("< %s", response)
 
     def _raise_error(self, status_code, raw_data):
-        """ Locate appropriate exception and raise it. """
+        """Locate appropriate exception and raise it."""
         error_message = raw_data
         additional_info = None
         try:
@@ -317,12 +314,12 @@ class Connection(object):
         )
 
     def _get_default_user_agent(self):
-        return "elasticsearch-py/%s (Python %s)" % (__versionstr__, python_version())
+        return "easysearch-py/%s (Python %s)" % (__versionstr__, python_version())
 
     def _get_api_key_header_val(self, api_key):
         """
         Check the type of the passed api_key and return the correct header value
-        for the `API Key authentication <https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html>`
+        for the `API Key authentication <https://easysearch.cn/guide/en/easysearch/reference/current/security-api-create-api-key.html>`
         :arg api_key, either a tuple or a base64 encoded string
         """
         if isinstance(api_key, (tuple, list)):

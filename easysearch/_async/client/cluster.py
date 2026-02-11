@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from .utils import NamespacedClient, query_params, _make_path, SKIP_IN_PATH
 
@@ -36,7 +33,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns basic information about the health of the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-health.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-health.html>`_
 
         :arg index: Limit the information returned to a specific index
         :arg expand_wildcards: Whether to expand wildcard expression to
@@ -76,7 +73,7 @@ class ClusterClient(NamespacedClient):
         Returns a list of any cluster-level changes (e.g. create index, update mapping,
         allocate or fail shard) which have not yet been executed.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-pending.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-pending.html>`_
 
         :arg local: Return local information, do not retrieve the state
             from master node (default: false)
@@ -100,7 +97,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns a comprehensive information about the state of the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-state.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-state.html>`_
 
         :arg metric: Limit the information returned to the specified
             metrics  Valid choices: _all, blocks, metadata, nodes, routing_table,
@@ -140,7 +137,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns high-level overview of cluster statistics.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-stats.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-stats.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information; use `_local` to return information from
@@ -152,9 +149,11 @@ class ClusterClient(NamespacedClient):
         """
         return await self.transport.perform_request(
             "GET",
-            "/_cluster/stats"
-            if node_id in SKIP_IN_PATH
-            else _make_path("_cluster", "stats", "nodes", node_id),
+            (
+                "/_cluster/stats"
+                if node_id in SKIP_IN_PATH
+                else _make_path("_cluster", "stats", "nodes", node_id)
+            ),
             params=params,
             headers=headers,
         )
@@ -166,7 +165,7 @@ class ClusterClient(NamespacedClient):
         """
         Allows to manually change the allocation of individual shards in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-reroute.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-reroute.html>`_
 
         :arg body: The definition of `commands` to perform (`move`,
             `cancel`, `allocate`)
@@ -192,7 +191,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns cluster settings.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-update-settings.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-update-settings.html>`_
 
         :arg flat_settings: Return settings in flat format (default:
             false)
@@ -211,7 +210,7 @@ class ClusterClient(NamespacedClient):
         """
         Updates the cluster settings.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-update-settings.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-update-settings.html>`_
 
         :arg body: The settings to be updated. Can be either `transient`
             or `persistent` (survives cluster restart).
@@ -233,7 +232,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns the information about configured remote clusters.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-remote-info.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-remote-info.html>`_
         """
         return await self.transport.perform_request(
             "GET", "/_remote/info", params=params, headers=headers
@@ -244,7 +243,7 @@ class ClusterClient(NamespacedClient):
         """
         Provides explanations for shard allocations in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-allocation-explain.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-allocation-explain.html>`_
 
         :arg body: The index, shard, and primary flag to explain. Empty
             means 'explain the first unassigned shard'
@@ -266,7 +265,7 @@ class ClusterClient(NamespacedClient):
         """
         Deletes a component template
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-component-template.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/indices-component-template.html>`_
 
         .. warning::
 
@@ -292,7 +291,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns one or more component templates
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-component-template.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/indices-component-template.html>`_
 
         .. warning::
 
@@ -317,7 +316,7 @@ class ClusterClient(NamespacedClient):
         """
         Creates or updates a component template
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-component-template.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/indices-component-template.html>`_
 
         .. warning::
 
@@ -348,7 +347,7 @@ class ClusterClient(NamespacedClient):
         """
         Returns information about whether a particular component template exist
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-component-template.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/indices-component-template.html>`_
 
         .. warning::
 
@@ -376,7 +375,7 @@ class ClusterClient(NamespacedClient):
         """
         Clears cluster voting config exclusions.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/voting-config-exclusions.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/voting-config-exclusions.html>`_
 
         :arg wait_for_removal: Specifies whether to wait for all
             excluded nodes to be removed from the cluster before clearing the voting
@@ -394,7 +393,7 @@ class ClusterClient(NamespacedClient):
         """
         Updates the cluster voting config exclusions by node ids or node names.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/voting-config-exclusions.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/voting-config-exclusions.html>`_
 
         :arg node_ids: A comma-separated list of the persistent ids of
             the nodes to exclude from the voting configuration. If specified, you

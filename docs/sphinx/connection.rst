@@ -3,23 +3,23 @@
 Connection Layer API
 ====================
 
-All of the classes responsible for handling the connection to the Elasticsearch
+All of the classes responsible for handling the connection to the Easysearch
 cluster. The default subclasses used can be overriden by passing parameters to the
-:class:`~elasticsearch.Elasticsearch` class. All of the arguments to the client
-will be passed on to :class:`~elasticsearch.Transport`,
-:class:`~elasticsearch.ConnectionPool` and :class:`~elasticsearch.Connection`.
+:class:`~easysearch.Easysearch` class. All of the arguments to the client
+will be passed on to :class:`~easysearch.Transport`,
+:class:`~easysearch.ConnectionPool` and :class:`~easysearch.Connection`.
 
 For example if you wanted to use your own implementation of the
-:class:`~elasticsearch.ConnectionSelector` class you can just pass in the
+:class:`~easysearch.ConnectionSelector` class you can just pass in the
 ``selector_class`` parameter.
 
 .. note::
 
-  :class:`~elasticsearch.ConnectionPool` and related options (like
+  :class:`~easysearch.ConnectionPool` and related options (like
   ``selector_class``) will only be used if more than one connection is defined.
   Either directly or via the :ref:`sniffing` mechanism.
 
-.. py:module:: elasticsearch
+.. py:module:: easysearch
 
 Transport
 ---------
@@ -45,7 +45,7 @@ Connection Selector
 Urllib3HttpConnection (default connection_class)
 ------------------------------------------------
 
-If you have complex SSL logic for connecting to Elasticsearch using an `SSLContext` object
+If you have complex SSL logic for connecting to Easysearch using an `SSLContext` object
 might be more helpful. You can create one natively using the python SSL library with the
 `create_default_context` (https://docs.python.org/3/library/ssl.html#ssl.create_default_context) method.
 

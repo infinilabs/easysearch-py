@@ -4,17 +4,17 @@ Transport classes
 =================
 
 List of transport classes that can be used, simply import your choice and pass
-it to the constructor of :class:`~elasticsearch.Elasticsearch` as
+it to the constructor of :class:`~easysearch.Easysearch` as
 `connection_class`. Note that the
-:class:`~elasticsearch.connection.RequestsHttpConnection` requires ``requests``
+:class:`~easysearch.connection.RequestsHttpConnection` requires ``requests``
 to be installed.
 
 For example to use the ``requests``-based connection just import it and use it:
 
 .. code-block:: python
 
-    from elasticsearch import Elasticsearch, RequestsHttpConnection
-    es = Elasticsearch(connection_class=RequestsHttpConnection)
+    from easysearch import Easysearch, RequestsHttpConnection
+    es = Easysearch(connection_class=RequestsHttpConnection)
 
 The default connection class is based on ``urllib3`` which is more performant
 and lightweight than the optional ``requests``-based class. Only use
@@ -22,7 +22,7 @@ and lightweight than the optional ``requests``-based class. Only use
 features like custom auth plugins etc.
 
 
-.. py:module:: elasticsearch.connection
+.. py:module:: easysearch.connection
 
 Connection
 ----------

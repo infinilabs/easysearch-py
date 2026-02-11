@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from typing import Any, MutableMapping, Optional, Union, Collection
 from .utils import NamespacedClient
@@ -38,7 +35,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def allocation(
         self,
@@ -60,7 +57,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def count(
         self,
@@ -79,7 +76,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def health(
         self,
@@ -99,7 +96,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def help(
         self,
@@ -115,7 +112,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def indices(
         self,
@@ -142,7 +139,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def master(
         self,
@@ -162,7 +159,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def nodes(
         self,
@@ -185,7 +182,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def recovery(
         self,
@@ -208,7 +205,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def shards(
         self,
@@ -231,7 +228,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def segments(
         self,
@@ -251,7 +248,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def pending_tasks(
         self,
@@ -272,7 +269,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def thread_pool(
         self,
@@ -294,7 +291,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def fielddata(
         self,
@@ -314,7 +311,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def plugins(
         self,
@@ -334,7 +331,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def nodeattrs(
         self,
@@ -354,7 +351,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def repositories(
         self,
@@ -374,7 +371,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def snapshots(
         self,
@@ -396,7 +393,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def tasks(
         self,
@@ -419,7 +416,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def templates(
         self,
@@ -440,7 +437,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def ml_data_frame_analytics(
         self,
@@ -462,7 +459,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def ml_datafeeds(
         self,
@@ -484,7 +481,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def ml_jobs(
         self,
@@ -507,7 +504,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def ml_trained_models(
         self,
@@ -531,7 +528,7 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     async def transforms(
         self,
@@ -554,5 +551,5 @@ class CatClient(NamespacedClient):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...

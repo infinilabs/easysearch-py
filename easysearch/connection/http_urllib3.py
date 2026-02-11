@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import time
 import ssl
@@ -65,7 +62,7 @@ class Urllib3HttpConnection(Connection):
 
     :arg host: hostname of the node (default: localhost)
     :arg port: port to use (integer, default: 9200)
-    :arg url_prefix: optional url prefix for elasticsearch
+    :arg url_prefix: optional url prefix for easysearch
     :arg timeout: default timeout in seconds (float, default: 10)
     :arg http_auth: optional http auth information as either ':' separated
         string or a tuple
@@ -89,7 +86,7 @@ class Urllib3HttpConnection(Connection):
         information.
     :arg headers: any custom http headers to be add to requests
     :arg http_compress: Use gzip compression
-    :arg cloud_id: The Cloud ID from ElasticCloud. Convenient way to connect to cloud instances.
+    :arg cloud_id: The Cloud ID from EasysearchCloud. Convenient way to connect to cloud instances.
         Other host connection params will be ignored.
     :arg api_key: optional API Key authentication as either base64 encoded string or a tuple.
     :arg opaque_id: Send this value in the 'X-Opaque-Id' HTTP header
@@ -117,7 +114,7 @@ class Urllib3HttpConnection(Connection):
         cloud_id=None,
         api_key=None,
         opaque_id=None,
-        **kwargs
+        **kwargs,
     ):
         # Initialize headers before calling super().__init__().
         self.headers = urllib3.make_headers(keep_alive=True)
@@ -131,7 +128,7 @@ class Urllib3HttpConnection(Connection):
             cloud_id=cloud_id,
             api_key=api_key,
             opaque_id=opaque_id,
-            **kwargs
+            **kwargs,
         )
         if http_auth is not None:
             if isinstance(http_auth, (tuple, list)):

@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 # type: ignore
 
@@ -21,8 +18,8 @@ import time
 import os
 from unittest import TestCase, SkipTest
 
-from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import ConnectionError
+from easysearch import Easysearch
+from easysearch.exceptions import ConnectionError
 
 
 def get_test_client(nowait=False, **kwargs):
@@ -30,14 +27,14 @@ def get_test_client(nowait=False, **kwargs):
     kw = {"timeout": 30, "ca_certs": ".ci/certs/ca.pem"}
 
     if "PYTHON_CONNECTION_CLASS" in os.environ:
-        from elasticsearch import connection
+        from easysearch import connection
 
         kw["connection_class"] = getattr(
             connection, os.environ["PYTHON_CONNECTION_CLASS"]
         )
 
     kw.update(kwargs)
-    client = Elasticsearch([os.environ.get("ELASTICSEARCH_HOST", {})], **kw)
+    client = Easysearch([os.environ.get("EASYSEARCH_HOST", {})], **kw)
 
     # wait for yellow status
     for _ in range(1 if nowait else 100):
@@ -48,7 +45,7 @@ def get_test_client(nowait=False, **kwargs):
             time.sleep(0.1)
     else:
         # timeout
-        raise SkipTest("Elasticsearch failed to start.")
+        raise SkipTest("Easysearch failed to start.")
 
 
 def _get_version(version_string):
@@ -58,7 +55,7 @@ def _get_version(version_string):
     return tuple(int(v) if v.isdigit() else 999 for v in version)
 
 
-class ElasticsearchTestCase(TestCase):
+class EasysearchTestCase(TestCase):
     @staticmethod
     def _get_client():
         return get_test_client()
@@ -68,9 +65,9 @@ class ElasticsearchTestCase(TestCase):
         cls.client = cls._get_client()
 
     def teardown_method(self, _):
-        # Hidden indices expanded in wildcards in ES 7.7
+        # Hidden indices expanded in wildcards in Easysearch 1.x+
         expand_wildcards = ["open", "closed"]
-        if self.es_version() >= (7, 7):
+        if self.es_version() >= (1, 0):
             expand_wildcards.append("hidden")
 
         self.client.indices.delete(

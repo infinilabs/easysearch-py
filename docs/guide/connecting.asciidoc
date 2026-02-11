@@ -19,11 +19,11 @@ providers.
 
 [discrete]
 [[auth-ec]]
-==== Elastic Cloud
+==== Easysearch Cloud
 
-Cloud ID is an easy way to configure your client to work with your Elastic Cloud 
+Cloud ID is an easy way to configure your client to work with your Easysearch Cloud 
 deployment. Combine the `cloud_id` with either `http_auth` or `api_key` to 
-authenticate with your Elastic Cloud deployment.
+authenticate with your Easysearch Cloud deployment.
 
 Using `cloud_id` enables TLS verification and HTTP compression by default and 
 sets the port to 443 unless otherwise overwritten via the port parameter or the 
@@ -31,9 +31,9 @@ port value encoded within `cloud_id`. Using Cloud ID also disables sniffing.
 
 [source,py]
 ----------------------------
-from elasticsearch import Elasticsearch
+from easysearch import Easysearch
 
-es = Elasticsearch(
+es = Easysearch(
     cloud_id=”cluster-1:dXMa5Fx...”
 )
 ----------------------------
@@ -48,9 +48,9 @@ password within a tuple:
 
 [source,py]
 ----------------------------
-from elasticsearch import Elasticsearch
+from easysearch import Easysearch
 
-es = Elasticsearch(
+es = Easysearch(
     http_auth=(“username”, “password”)
 )
 ----------------------------
@@ -65,9 +65,9 @@ cluster.
 
 [source,py]
 ----------------------------
-from elasticsearch import Elasticsearch
+from easysearch import Easysearch
 
-es = Elasticsearch(
+es = Easysearch(
     api_key=(“api_key_id”, “api_key_secret”)
 )
 ----------------------------
@@ -89,8 +89,8 @@ To index a document, you need to specify four pieces of information: `index`,
 [source,py]
 ----------------------------
 from datetime import datetime
-from elasticsearch import Elasticsearch
-es = Elasticsearch()
+from easysearch import Easysearch
+es = Easysearch()
 
 doc = {
     'author': 'author_name',

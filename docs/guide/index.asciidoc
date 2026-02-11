@@ -1,4 +1,4 @@
-= elasticsearch-py
+= easysearch-py
 
 :doctype:           book
 

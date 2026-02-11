@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from .utils import NamespacedClient, query_params, _make_path
 
@@ -26,10 +23,10 @@ class NodesClient(NamespacedClient):
         """
         Reloads secure settings.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/secure-settings.html#reloadable-secure-settings>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/secure-settings.html#reloadable-secure-settings>`_
 
         :arg body: An object containing the password for the
-            elasticsearch keystore
+            easysearch keystore
         :arg node_id: A comma-separated list of node IDs to span the
             reload/reinit call. Should stay empty because reloading usually involves
             all cluster nodes.
@@ -48,7 +45,7 @@ class NodesClient(NamespacedClient):
         """
         Returns information about nodes in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-nodes-info.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-nodes-info.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information; use `_local` to return information from
@@ -81,7 +78,7 @@ class NodesClient(NamespacedClient):
         """
         Returns statistical information about nodes in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-nodes-stats.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-nodes-stats.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information; use `_local` to return information from
@@ -126,7 +123,7 @@ class NodesClient(NamespacedClient):
         """
         Returns information about hot threads on each node in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-nodes-hot-threads.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-nodes-hot-threads.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information; use `_local` to return information from
@@ -160,7 +157,7 @@ class NodesClient(NamespacedClient):
         """
         Returns low-level information about REST actions usage on nodes.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-nodes-usage.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cluster-nodes-usage.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information; use `_local` to return information from

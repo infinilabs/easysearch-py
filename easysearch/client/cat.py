@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from .utils import NamespacedClient, query_params, _make_path
 
@@ -25,7 +22,7 @@ class CatClient(NamespacedClient):
         Shows information about currently configured aliases to indices including
         filter and routing infos.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-alias.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-alias.html>`_
 
         :arg name: A comma-separated list of alias names to return
         :arg expand_wildcards: Whether to expand wildcard expression to
@@ -51,7 +48,7 @@ class CatClient(NamespacedClient):
         Provides a snapshot of how many shards are allocated to each data node and how
         much disk space they are using.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-allocation.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-allocation.html>`_
 
         :arg node_id: A comma-separated list of node IDs or names to
             limit the returned information
@@ -82,7 +79,7 @@ class CatClient(NamespacedClient):
         Provides quick access to the document count of the entire cluster, or
         individual indices.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-count.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-count.html>`_
 
         :arg index: A comma-separated list of index names to limit the
             returned information
@@ -103,7 +100,7 @@ class CatClient(NamespacedClient):
         """
         Returns a concise representation of the cluster health.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-health.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-health.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -125,7 +122,7 @@ class CatClient(NamespacedClient):
         """
         Returns help for the Cat APIs.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat.html>`_
 
         :arg help: Return help information
         :arg s: Comma-separated list of column names or column aliases
@@ -155,7 +152,7 @@ class CatClient(NamespacedClient):
         Returns information about indices: number of primaries and replicas, document
         counts, disk size, ...
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-indices.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-indices.html>`_
 
         :arg index: A comma-separated list of index names to limit the
             returned information
@@ -194,7 +191,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about the master node.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-master.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-master.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -228,7 +225,7 @@ class CatClient(NamespacedClient):
         """
         Returns basic statistics about performance of cluster nodes.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-nodes.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-nodes.html>`_
 
         :arg bytes: The unit in which to display byte values  Valid
             choices: b, k, kb, m, mb, g, gb, t, tb, p, pb
@@ -259,7 +256,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about index shard recoveries, both on-going completed.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-recovery.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-recovery.html>`_
 
         :arg index: Comma-separated list or wildcard expression of index
             names to limit the returned information
@@ -290,7 +287,7 @@ class CatClient(NamespacedClient):
         """
         Provides a detailed view of shard allocation on nodes.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-shards.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-shards.html>`_
 
         :arg index: A comma-separated list of index names to limit the
             returned information
@@ -319,7 +316,7 @@ class CatClient(NamespacedClient):
         """
         Provides low-level information about the segments in the shards of an index.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-segments.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-segments.html>`_
 
         :arg index: A comma-separated list of index names to limit the
             returned information
@@ -342,7 +339,7 @@ class CatClient(NamespacedClient):
         """
         Returns a concise representation of the cluster pending tasks.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-pending-tasks.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-pending-tasks.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -368,7 +365,7 @@ class CatClient(NamespacedClient):
         Returns cluster-wide thread pool statistics per node. By default the active,
         queue and rejected statistics are returned for all thread pools.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-thread-pool.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-thread-pool.html>`_
 
         :arg thread_pool_patterns: A comma-separated list of regular-
             expressions to filter the thread pools in the output
@@ -399,7 +396,7 @@ class CatClient(NamespacedClient):
         Shows how much heap memory is currently being used by fielddata on every data
         node in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-fielddata.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-fielddata.html>`_
 
         :arg fields: A comma-separated list of fields to return in the
             output
@@ -425,7 +422,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about installed plugins across nodes node.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-plugins.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-plugins.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -448,7 +445,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about custom node attributes.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-nodeattrs.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-nodeattrs.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -471,7 +468,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about snapshot repositories registered in the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-repositories.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-repositories.html>`_
 
         :arg format: a short version of the Accept header, e.g. json,
             yaml
@@ -496,7 +493,7 @@ class CatClient(NamespacedClient):
         """
         Returns all snapshots in a specific repository.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-snapshots.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-snapshots.html>`_
 
         :arg repository: Name of repository from which to fetch the
             snapshot information
@@ -538,7 +535,7 @@ class CatClient(NamespacedClient):
         Returns information about the tasks currently executing on one or more nodes in
         the cluster.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/tasks.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/tasks.html>`_
 
         :arg actions: A comma-separated list of actions that should be
             returned. Leave empty to return all.
@@ -568,7 +565,7 @@ class CatClient(NamespacedClient):
         """
         Returns information about existing templates.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-templates.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-templates.html>`_
 
         :arg name: A pattern that returned template names must match
         :arg format: a short version of the Accept header, e.g. json,
@@ -592,7 +589,7 @@ class CatClient(NamespacedClient):
         """
         Gets configuration and usage information about data frame analytics jobs.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-dfanalytics.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-dfanalytics.html>`_
 
         :arg id: The ID of the data frame analytics to fetch
         :arg allow_no_match: Whether to ignore if a wildcard expression
@@ -624,7 +621,7 @@ class CatClient(NamespacedClient):
         """
         Gets configuration and usage information about datafeeds.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-datafeeds.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-datafeeds.html>`_
 
         :arg datafeed_id: The ID of the datafeeds stats to fetch
         :arg allow_no_datafeeds: Whether to ignore if a wildcard
@@ -665,7 +662,7 @@ class CatClient(NamespacedClient):
         """
         Gets configuration and usage information about anomaly detection jobs.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-anomaly-detectors.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-anomaly-detectors.html>`_
 
         :arg job_id: The ID of the jobs stats to fetch
         :arg allow_no_jobs: Whether to ignore if a wildcard expression
@@ -709,7 +706,7 @@ class CatClient(NamespacedClient):
         """
         Gets configuration and usage information about inference trained models.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-trained-model.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-trained-model.html>`_
 
         :arg model_id: The ID of the trained models stats to fetch
         :arg allow_no_match: Whether to ignore if a wildcard expression
@@ -748,7 +745,7 @@ class CatClient(NamespacedClient):
         """
         Gets configuration and usage information about transforms.
 
-        `<https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-transforms.html>`_
+        `<https://easysearch.cn/guide/en/easysearch/reference/7.10/cat-transforms.html>`_
 
         :arg transform_id: The id of the transform for which to get
             stats. '_all' or '*' implies all transforms

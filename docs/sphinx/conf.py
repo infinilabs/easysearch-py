@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Licensed to Elasticsearch B.V under one or more agreements.
-# Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
+# Licensed to INFINI Labs under the Apache 2.0 License.
+# See the LICENSE file in the project root for more information.
 # See the LICENSE file in the project root for more information
 
 import os
 import datetime
-import elasticsearch
+import easysearch
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -36,15 +36,15 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"Elasticsearch"
-copyright = u"%d, Elasticsearch B.V" % datetime.date.today().year
+project = u"Easysearch"
+copyright = u"%d, INFINI Labs" % datetime.date.today().year
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
 # The short X.Y version.
-version = elasticsearch.__versionstr__
+version = easysearch.__versionstr__
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -174,7 +174,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "Elasticsearchdoc"
+htmlhelp_basename = "Easysearchdoc"
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -193,8 +193,8 @@ latex_elements = {
 latex_documents = [
     (
         "index",
-        "Elasticsearch.tex",
-        u"Elasticsearch Documentation",
+        "Easysearch.tex",
+        u"Easysearch Documentation",
         u"Honza Král",
         "manual",
     )
@@ -226,7 +226,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ("index", "elasticsearch-py", u"Elasticsearch Documentation", [u"Honza Král"], 1)
+    ("index", "easysearch-py", u"Easysearch Documentation", [u"INFINI Labs"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -241,10 +241,10 @@ man_pages = [
 texinfo_documents = [
     (
         "index",
-        "Elasticsearch",
-        u"Elasticsearch Documentation",
+        "Easysearch",
+        u"Easysearch Documentation",
         u"Honza Král",
-        "Elasticsearch",
+        "Easysearch",
         "One line description of project.",
         "Miscellaneous",
     )

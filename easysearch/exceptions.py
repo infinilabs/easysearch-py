@@ -1,23 +1,20 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 __all__ = [
     "ImproperlyConfigured",
-    "ElasticsearchException",
+    "EasysearchException",
     "SerializationError",
     "TransportError",
     "NotFoundError",
@@ -37,21 +34,21 @@ class ImproperlyConfigured(Exception):
     """
 
 
-class ElasticsearchException(Exception):
+class EasysearchException(Exception):
     """
     Base class for all exceptions raised by this package's operations (doesn't
-    apply to :class:`~elasticsearch.ImproperlyConfigured`).
+    apply to :class:`~easysearch.ImproperlyConfigured`).
     """
 
 
-class SerializationError(ElasticsearchException):
+class SerializationError(EasysearchException):
     """
     Data passed in failed to serialize properly in the ``Serializer`` being
     used.
     """
 
 
-class TransportError(ElasticsearchException):
+class TransportError(EasysearchException):
     """
     Exception raised when ES returns a non-OK (>=400) HTTP status code. Or when
     an actual connection error happens; in that case the ``status_code`` will
@@ -68,7 +65,7 @@ class TransportError(ElasticsearchException):
 
     @property
     def error(self):
-        """ A string error message. """
+        """A string error message."""
         return self.args[1]
 
     @property
@@ -107,7 +104,7 @@ class TransportError(ElasticsearchException):
 class ConnectionError(TransportError):
     """
     Error raised when there was an exception while talking to ES. Original
-    exception from the underlying :class:`~elasticsearch.Connection`
+    exception from the underlying :class:`~easysearch.Connection`
     implementation is available as ``.info``.
     """
 
@@ -120,11 +117,11 @@ class ConnectionError(TransportError):
 
 
 class SSLError(ConnectionError):
-    """ Error raised when encountering SSL errors. """
+    """Error raised when encountering SSL errors."""
 
 
 class ConnectionTimeout(ConnectionError):
-    """ A network timeout. Doesn't cause a node retry by default. """
+    """A network timeout. Doesn't cause a node retry by default."""
 
     def __str__(self):
         return "ConnectionTimeout caused by - %s(%s)" % (
@@ -134,26 +131,26 @@ class ConnectionTimeout(ConnectionError):
 
 
 class NotFoundError(TransportError):
-    """ Exception representing a 404 status code. """
+    """Exception representing a 404 status code."""
 
 
 class ConflictError(TransportError):
-    """ Exception representing a 409 status code. """
+    """Exception representing a 409 status code."""
 
 
 class RequestError(TransportError):
-    """ Exception representing a 400 status code. """
+    """Exception representing a 400 status code."""
 
 
 class AuthenticationException(TransportError):
-    """ Exception representing a 401 status code. """
+    """Exception representing a 401 status code."""
 
 
 class AuthorizationException(TransportError):
-    """ Exception representing a 403 status code. """
+    """Exception representing a 403 status code."""
 
 
-class ElasticsearchDeprecationWarning(Warning):
+class EasysearchDeprecationWarning(Warning):
     """Warning that is raised when a deprecated option
     is flagged via the 'Warning' HTTP header.
     """

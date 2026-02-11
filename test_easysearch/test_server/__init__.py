@@ -1,23 +1,20 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from unittest import SkipTest
-from elasticsearch.helpers import test
-from elasticsearch.helpers.test import ElasticsearchTestCase as BaseTestCase
+from easysearch.helpers import test
+from easysearch.helpers.test import EasysearchTestCase as BaseTestCase
 
 client = None
 
@@ -31,7 +28,7 @@ def get_client(**kwargs):
 
     # try and locate manual override in the local environment
     try:
-        from test_elasticsearch.local import get_client as local_get_client
+        from test_easysearch.local import get_client as local_get_client
 
         new_client = local_get_client(**kwargs)
     except ImportError:
@@ -52,7 +49,7 @@ def setup_module():
     get_client()
 
 
-class ElasticsearchTestCase(BaseTestCase):
+class EasysearchTestCase(BaseTestCase):
     @staticmethod
     def _get_client(**kwargs):
         return get_client(**kwargs)

@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import mock
 import time
 import threading
 import pytest
-from elasticsearch import helpers, Elasticsearch
-from elasticsearch.serializer import JSONSerializer
+from easysearch import helpers, Easysearch
+from easysearch.serializer import JSONSerializer
 
 from .test_cases import TestCase
 
@@ -45,18 +42,18 @@ mock_process_bulk_chunk.call_count = 0
 
 class TestParallelBulk(TestCase):
     @mock.patch(
-        "elasticsearch.helpers.actions._process_bulk_chunk",
+        "easysearch.helpers.actions._process_bulk_chunk",
         side_effect=mock_process_bulk_chunk,
     )
     def test_all_chunks_sent(self, _process_bulk_chunk):
         actions = ({"x": i} for i in range(100))
-        list(helpers.parallel_bulk(Elasticsearch(), actions, chunk_size=2))
+        list(helpers.parallel_bulk(Easysearch(), actions, chunk_size=2))
 
         self.assertEqual(50, mock_process_bulk_chunk.call_count)
 
     @pytest.mark.skip
     @mock.patch(
-        "elasticsearch.helpers.actions._process_bulk_chunk",
+        "easysearch.helpers.actions._process_bulk_chunk",
         # make sure we spend some time in the thread
         side_effect=lambda *a: [
             (True, time.sleep(0.001) or threading.current_thread().ident)
@@ -65,16 +62,14 @@ class TestParallelBulk(TestCase):
     def test_chunk_sent_from_different_threads(self, _process_bulk_chunk):
         actions = ({"x": i} for i in range(100))
         results = list(
-            helpers.parallel_bulk(
-                Elasticsearch(), actions, thread_count=10, chunk_size=2
-            )
+            helpers.parallel_bulk(Easysearch(), actions, thread_count=10, chunk_size=2)
         )
         self.assertTrue(len(set([r[1] for r in results])) > 1)
 
 
 class TestChunkActions(TestCase):
     def setup_method(self, _):
-        self.actions = [({"index": {}}, {"some": u"datá", "i": i}) for i in range(100)]
+        self.actions = [({"index": {}}, {"some": "datá", "i": i}) for i in range(100)]
 
     def test_expand_action(self):
         self.assertEqual(helpers.expand_action({}), ({"index": {}}, {}))
@@ -200,7 +195,7 @@ class TestChunkActions(TestCase):
         )
         self.assertEqual(25, len(chunks))
         for chunk_data, chunk_actions in chunks:
-            chunk = u"".join(chunk_actions)
+            chunk = "".join(chunk_actions)
             chunk = chunk if isinstance(chunk, str) else chunk.encode("utf-8")
             self.assertLessEqual(len(chunk), max_byte_size)
 

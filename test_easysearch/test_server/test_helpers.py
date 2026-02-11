@@ -1,26 +1,23 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from mock import patch
 
-from elasticsearch import helpers, TransportError
-from elasticsearch.helpers import ScanError
+from easysearch import helpers, TransportError
+from easysearch.helpers import ScanError
 
-from . import ElasticsearchTestCase
+from . import EasysearchTestCase
 from ..test_cases import SkipTest
 
 
@@ -41,7 +38,7 @@ class FailingBulkClient(object):
         return self.client.bulk(*args, **kwargs)
 
 
-class TestStreamingBulk(ElasticsearchTestCase):
+class TestStreamingBulk(EasysearchTestCase):
     def test_actions_remain_unchanged(self):
         actions = [{"_id": 1}, {"_id": 2}]
         for ok, item in helpers.streaming_bulk(
@@ -220,7 +217,7 @@ class TestStreamingBulk(ElasticsearchTestCase):
         self.assertEqual(4, failing_client._called)
 
 
-class TestBulk(ElasticsearchTestCase):
+class TestBulk(EasysearchTestCase):
     def test_bulk_works_with_single_item(self):
         docs = [{"answer": 42, "_id": 1}]
         success, failed = helpers.bulk(
@@ -324,7 +321,7 @@ class TestBulk(ElasticsearchTestCase):
         self.assertEqual(1, failed)
 
 
-class TestScan(ElasticsearchTestCase):
+class TestScan(EasysearchTestCase):
     mock_scroll_responses = [
         {
             "_scroll_id": "dummy_id",
@@ -445,7 +442,7 @@ class TestScan(ElasticsearchTestCase):
             client_mock.scroll.assert_not_called()
             client_mock.clear_scroll.assert_not_called()
 
-    @patch("elasticsearch.helpers.actions.logger")
+    @patch("easysearch.helpers.actions.logger")
     def test_logger(self, logger_mock):
         bulk = []
         for x in range(4):
@@ -536,7 +533,7 @@ class TestScan(ElasticsearchTestCase):
             self.assertEqual(data, [{"search_data": 1}, {"scroll_data": 42}])
 
 
-class TestReindex(ElasticsearchTestCase):
+class TestReindex(EasysearchTestCase):
     def setup_method(self, _):
         bulk = []
         for x in range(100):
@@ -606,7 +603,7 @@ class TestReindex(ElasticsearchTestCase):
         )
 
 
-class TestParentChildReindex(ElasticsearchTestCase):
+class TestParentChildReindex(EasysearchTestCase):
     def setup_method(self, _):
         body = {
             "settings": {"number_of_shards": 1, "number_of_replicas": 0},

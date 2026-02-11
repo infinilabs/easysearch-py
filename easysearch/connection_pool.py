@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import time
 import random
@@ -27,7 +24,7 @@ except ImportError:
 
 from .exceptions import ImproperlyConfigured
 
-logger = logging.getLogger("elasticsearch")
+logger = logging.getLogger("easysearch")
 
 
 class ConnectionSelector(object):
@@ -39,7 +36,7 @@ class ConnectionSelector(object):
     *currently* live connections to choose from.
 
     The options dictionary is the one that has been passed to
-    :class:`~elasticsearch.Transport` as `hosts` param and the same that is
+    :class:`~easysearch.Transport` as `hosts` param and the same that is
     used to construct the Connection object itself. When the Connection was
     created from information retrieved from the cluster via the sniffing
     process it will be the dictionary returned by the `host_info_callback`.
@@ -90,11 +87,11 @@ class RoundRobinSelector(ConnectionSelector):
 
 class ConnectionPool(object):
     """
-    Container holding the :class:`~elasticsearch.Connection` instances,
+    Container holding the :class:`~easysearch.Connection` instances,
     managing the selection process (via a
-    :class:`~elasticsearch.ConnectionSelector`) and dead connections.
+    :class:`~easysearch.ConnectionSelector`) and dead connections.
 
-    It's only interactions are with the :class:`~elasticsearch.Transport` class
+    It's only interactions are with the :class:`~easysearch.Transport` class
     that drives all the actions within `ConnectionPool`.
 
     Initially connections are stored on the class as a list and, along with the
@@ -118,16 +115,16 @@ class ConnectionPool(object):
         timeout_cutoff=5,
         selector_class=RoundRobinSelector,
         randomize_hosts=True,
-        **kwargs
+        **kwargs,
     ):
         """
         :arg connections: list of tuples containing the
-            :class:`~elasticsearch.Connection` instance and it's options
+            :class:`~easysearch.Connection` instance and it's options
         :arg dead_timeout: number of seconds a connection should be retired for
             after a failure, increases on consecutive failures
         :arg timeout_cutoff: number of consecutive failures after which the
             timeout doesn't increase
-        :arg selector_class: :class:`~elasticsearch.ConnectionSelector`
+        :arg selector_class: :class:`~easysearch.ConnectionSelector`
             subclass to use if more than one connection is live
         :arg randomize_hosts: shuffle the list of connections upon arrival to
             avoid dog piling effect across processes

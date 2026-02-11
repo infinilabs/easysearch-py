@@ -1,62 +1,44 @@
-Python Elasticsearch Client
-===========================
+Python Easysearch Client
+=========================
 
-Official low-level client for Elasticsearch. Its goal is to provide common
-ground for all Elasticsearch-related code in Python; because of this it tries
+Official Python client for INFINI Easysearch. Its goal is to provide common
+ground for all Easysearch-related code in Python; because of this it tries
 to be opinion-free and very extendable.
 
 
 Installation
 ------------
 
-Install the ``elasticsearch`` package with `pip
-<https://pypi.org/project/elasticsearch>`_::
+Install the ``easysearch`` package with `pip
+<https://pypi.org/project/easysearch>`_::
 
-    $ python -m pip install elasticsearch
+    $ python -m pip install easysearch
 
 If your application uses async/await in Python you can install with
 the ``async`` extra::
 
-    $ python -m pip install elasticsearch[async]
+    $ python -m pip install easysearch[async]
 
-Read more about `how to use asyncio with this project <https://elasticsearch-py.readthedocs.io/en/master/async.html>`_.
+Read more about `how to use asyncio with this project <https://github.com/infinilabs/easysearch-py>`_.
 
 
 Compatibility
 -------------
 
-The library is compatible with all Elasticsearch versions since ``0.90.x`` but you
-**have to use a matching major version**:
+The library is compatible with Easysearch 1.x and 2.x versions.
 
-For **Elasticsearch 7.0** and later, use the major version 7 (``7.x.y``) of the
-library.
+For **Easysearch 1.x**, use the major version 1 (``1.x.y``) of the library.
 
-For **Elasticsearch 6.0** and later, use the major version 6 (``6.x.y``) of the
-library.
-
-For **Elasticsearch 5.0** and later, use the major version 5 (``5.x.y``) of the
-library.
-
-For **Elasticsearch 2.0** and later, use the major version 2 (``2.x.y``) of the
-library, and so on.
+For **Easysearch 2.x**, use the major version 2 (``2.x.y``) of the library.
 
 The recommended way to set your requirements in your `setup.py` or
 `requirements.txt` is::
 
-    # Elasticsearch 7.x
-    elasticsearch>=7.0.0,<8.0.0
+    # Easysearch 2.x
+    easysearch>=2.0.0,<3.0.0
 
-    # Elasticsearch 6.x
-    elasticsearch>=6.0.0,<7.0.0
-
-    # Elasticsearch 5.x
-    elasticsearch>=5.0.0,<6.0.0
-
-    # Elasticsearch 2.x
-    elasticsearch>=2.0.0,<3.0.0
-
-If you have a need to have multiple versions installed at the same time older
-versions are also released as ``elasticsearch2`` and ``elasticsearch5``.
+    # Easysearch 1.x
+    easysearch>=1.0.0,<2.0.0
 
 
 Example use
@@ -65,12 +47,12 @@ Example use
 Simple use-case::
 
     >>> from datetime import datetime
-    >>> from elasticsearch import Elasticsearch
+    >>> from easysearch import Easysearch
 
     # by default we connect to localhost:9200
-    >>> es = Elasticsearch()
+    >>> es = Easysearch()
 
-    # create an index in elasticsearch, ignore status code 400 (index already exists)
+    # create an index in easysearch, ignore status code 400 (index already exists)
     >>> es.indices.create(index='my-index', ignore=400)
     {'acknowledged': True, 'shards_acknowledged': True, 'index': 'my-index'}
 
@@ -91,21 +73,15 @@ Simple use-case::
 
 `Full documentation`_.
 
-.. _Full documentation: https://elasticsearch-py.readthedocs.io/
-
-Elastic Cloud (and SSL) use-case::
-
-    >>> from elasticsearch import Elasticsearch
-    >>> es = Elasticsearch(cloud_id="<some_long_cloud_id>", http_auth=('elastic','yourpassword'))
-    >>> es.info()
+.. _Full documentation: https://github.com/infinilabs/easysearch-py
 
 Using SSL Context with a self-signed cert use-case::
 
-    >>> from elasticsearch import Elasticsearch
+    >>> from easysearch import Easysearch
     >>> from ssl import create_default_context
 
     >>> context = create_default_context(cafile="path/to/cafile.pem")
-    >>> es = Elasticsearch("https://elasticsearch.url:port", ssl_context=context, http_auth=('elastic','yourpassword'))
+    >>> es = Easysearch("https://easysearch.url:port", ssl_context=context, http_auth=('admin','password'))
     >>> es.info()
 
 
@@ -126,31 +102,10 @@ The client's features include:
  * pluggable architecture
 
 
-Elasticsearch-DSL
------------------
-
-For a more high level client library with more limited scope, have a look at
-`elasticsearch-dsl`_ - a more pythonic library sitting on top of
-``elasticsearch-py``.
-
-`elasticsearch-dsl`_ provides a more convenient and idiomatic way to write and manipulate
-`queries`_ by mirroring the terminology and structure of Elasticsearch JSON DSL
-while exposing the whole range of the DSL from Python
-either directly using defined classes or a queryset-like expressions.
-
-It also provides an optional `persistence layer`_ for working with documents as
-Python objects in an ORM-like fashion: defining mappings, retrieving and saving
-documents, wrapping the document data in user-defined classes.
-
-.. _elasticsearch-dsl: https://elasticsearch-dsl.readthedocs.io/
-.. _queries: https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html
-.. _persistence layer: https://elasticsearch-dsl.readthedocs.io/en/latest/persistence.html#doctype
-
-
 License
 -------
 
-Copyright 2020 Elasticsearch B.V
+Copyright 2021-2026 INFINI Labs
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -163,11 +118,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-Build Status
-------------
-.. image:: https://readthedocs.org/projects/elasticsearch-py/badge/?version=latest&style=flat
-   :target: https://elasticsearch-py.readthedocs.io/en/master/
-
-.. image:: https://clients-ci.elastic.co/job/elastic+elasticsearch-py+master/badge/icon
-   :target: https://clients-ci.elastic.co/job/elastic+elasticsearch-py+master/

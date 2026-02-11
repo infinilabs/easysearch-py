@@ -3,15 +3,15 @@
 Exceptions
 ==========
 
-.. py:module:: elasticsearch
+.. py:module:: easysearch
 
 .. autoclass:: ImproperlyConfigured
 
-.. autoclass:: ElasticsearchException
+.. autoclass:: EasysearchException
 
-.. autoclass:: SerializationError(ElasticsearchException)
+.. autoclass:: SerializationError(EasysearchException)
 
-.. autoclass:: TransportError(ElasticsearchException)
+.. autoclass:: TransportError(EasysearchException)
    :members:
 
 .. autoclass:: ConnectionError(TransportError)

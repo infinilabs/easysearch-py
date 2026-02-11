@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from __future__ import unicode_literals
 import logging
@@ -56,7 +53,7 @@ from .watcher import WatcherClient
 
 logger: logging.Logger
 
-class Elasticsearch(object):
+class Easysearch(object):
     transport: Transport
 
     async_search: AsyncSearchClient
@@ -93,7 +90,7 @@ class Elasticsearch(object):
         self, hosts: Any = ..., transport_class: Type[Transport] = ..., **kwargs: Any
     ) -> None: ...
     def __repr__(self) -> str: ...
-    def __enter__(self) -> "Elasticsearch": ...
+    def __enter__(self) -> "Easysearch": ...
     def __exit__(self, *_: Any) -> None: ...
     def close(self) -> None: ...
     # AUTO-GENERATED-API-DEFINITIONS #
@@ -109,7 +106,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> bool: ...
     def info(
         self,
@@ -123,7 +120,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def create(
         self,
@@ -148,7 +145,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def index(
         self,
@@ -177,7 +174,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def bulk(
         self,
@@ -203,7 +200,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def clear_scroll(
         self,
@@ -219,7 +216,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def count(
         self,
@@ -250,7 +247,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def delete(
         self,
@@ -275,7 +272,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def delete_by_query(
         self,
@@ -325,7 +322,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def delete_by_query_rethrottle(
         self,
@@ -341,7 +338,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def delete_script(
         self,
@@ -358,7 +355,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def exists(
         self,
@@ -385,7 +382,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> bool: ...
     def exists_source(
         self,
@@ -411,7 +408,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> bool: ...
     def explain(
         self,
@@ -441,7 +438,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def field_caps(
         self,
@@ -462,7 +459,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def get(
         self,
@@ -489,7 +486,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def get_script(
         self,
@@ -505,7 +502,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def get_source(
         self,
@@ -531,7 +528,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def mget(
         self,
@@ -556,7 +553,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def msearch(
         self,
@@ -580,7 +577,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def msearch_template(
         self,
@@ -602,7 +599,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def mtermvectors(
         self,
@@ -631,7 +628,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def put_script(
         self,
@@ -650,7 +647,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def rank_eval(
         self,
@@ -670,7 +667,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def reindex(
         self,
@@ -693,7 +690,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def reindex_rethrottle(
         self,
@@ -709,7 +706,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def render_search_template(
         self,
@@ -725,7 +722,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def scripts_painless_execute(
         self,
@@ -740,7 +737,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def scroll(
         self,
@@ -758,7 +755,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def search(
         self,
@@ -817,7 +814,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def search_shards(
         self,
@@ -838,7 +835,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def search_template(
         self,
@@ -868,7 +865,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def termvectors(
         self,
@@ -897,7 +894,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def update(
         self,
@@ -927,7 +924,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def update_by_query(
         self,
@@ -979,7 +976,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def update_by_query_rethrottle(
         self,
@@ -995,7 +992,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def get_script_context(
         self,
@@ -1009,7 +1006,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def get_script_languages(
         self,
@@ -1023,7 +1020,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def close_point_in_time(
         self,
@@ -1038,7 +1035,7 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...
     def open_point_in_time(
         self,
@@ -1058,5 +1055,5 @@ class Elasticsearch(object):
         ignore: Optional[Union[int, Collection[int]]] = ...,
         opaque_id: Optional[str] = ...,
         params: Optional[MutableMapping[str, Any]] = ...,
-        headers: Optional[MutableMapping[str, str]] = ...
+        headers: Optional[MutableMapping[str, str]] = ...,
     ) -> Any: ...

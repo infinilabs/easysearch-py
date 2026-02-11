@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import time
 from itertools import chain
@@ -36,7 +33,7 @@ def get_host_info(node_info, host):
     `None` is returned this node will be skipped.
 
     Useful for filtering nodes (by proximity for example) or if additional
-    information needs to be provided for the :class:`~elasticsearch.Connection`
+    information needs to be provided for the :class:`~easysearch.Connection`
     class. By default master only nodes are filtered out since they shouldn't
     typically be used for API operations.
 
@@ -76,13 +73,13 @@ class Transport(object):
         retry_on_status=(502, 503, 504),
         retry_on_timeout=False,
         send_get_body_as="GET",
-        **kwargs
+        **kwargs,
     ):
         """
         :arg hosts: list of dictionaries, each containing keyword arguments to
             create a `connection_class` instance
-        :arg connection_class: subclass of :class:`~elasticsearch.Connection` to use
-        :arg connection_pool_class: subclass of :class:`~elasticsearch.ConnectionPool` to use
+        :arg connection_class: subclass of :class:`~easysearch.Connection` to use
+        :arg connection_pool_class: subclass of :class:`~easysearch.ConnectionPool` to use
         :arg host_info_callback: callback responsible for taking the node information from
             `/_cluster/nodes`, along with already extracted information, and
             producing a list of arguments (same as `hosts` parameter)
@@ -177,7 +174,7 @@ class Transport(object):
 
     def add_connection(self, host):
         """
-        Create a new :class:`~elasticsearch.Connection` instance and add it to the pool.
+        Create a new :class:`~easysearch.Connection` instance and add it to the pool.
 
         :arg host: kwargs that will be used to create the instance
         """
@@ -188,17 +185,18 @@ class Transport(object):
         """
         Instantiate all the connections and create new connection pool to hold them.
         Tries to identify unchanged hosts and re-use existing
-        :class:`~elasticsearch.Connection` instances.
+        :class:`~easysearch.Connection` instances.
 
         :arg hosts: same as `__init__`
         """
+
         # construct the connections
         def _create_connection(host):
             # if this is not the initial setup look at the existing connection
             # options and identify connections that haven't changed and can be
             # kept around.
             if hasattr(self, "connection_pool"):
-                for (connection, old_host) in self.connection_pool.connection_opts:
+                for connection, old_host in self.connection_pool.connection_opts:
                     if old_host == host:
                         return connection
 
@@ -220,8 +218,8 @@ class Transport(object):
 
     def get_connection(self):
         """
-        Retrieve a :class:`~elasticsearch.Connection` instance from the
-        :class:`~elasticsearch.ConnectionPool` instance.
+        Retrieve a :class:`~easysearch.Connection` instance from the
+        :class:`~easysearch.ConnectionPool` instance.
         """
         if self.sniffer_timeout:
             if time.time() >= self.last_sniff + self.sniffer_timeout:
@@ -319,7 +317,7 @@ class Transport(object):
         Mark a connection as dead (failed) in the connection pool. If sniffing
         on failure is enabled this will initiate the sniffing process.
 
-        :arg connection: instance of :class:`~elasticsearch.Connection` that failed
+        :arg connection: instance of :class:`~easysearch.Connection` that failed
         """
         # mark as dead even when sniffing to avoid hitting this host during the sniff process
         self.connection_pool.mark_dead(connection)
@@ -341,9 +339,9 @@ class Transport(object):
         :arg method: HTTP method to use
         :arg url: absolute url (without host) to target
         :arg headers: dictionary of headers, will be handed over to the
-            underlying :class:`~elasticsearch.Connection` class
+            underlying :class:`~easysearch.Connection` class
         :arg params: dictionary of query parameters, will be handed over to the
-            underlying :class:`~elasticsearch.Connection` class for serialization
+            underlying :class:`~easysearch.Connection` class for serialization
         :arg body: body of the request, will be serialized using serializer and
             passed to the connection
         """

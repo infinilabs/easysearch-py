@@ -1,22 +1,19 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 """A command line tool for building and verifying releases
-Can be used for building both 'elasticsearch' and 'elasticsearchX' dists.
+Can be used for building both 'easysearch' and 'easysearchX' dists.
 Only requires 'name' in 'setup.py' and the directory to be changed.
 """
 
@@ -27,7 +24,6 @@ import sys
 import re
 import contextlib
 import shutil
-
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 tmp_dir = None
@@ -62,7 +58,7 @@ def run(*argv, expect_exit_code=0):
 
 def test_dist(dist):
     with set_tmp_dir() as tmp_dir:
-        dist_name = re.match(r"^(elasticsearch\d*)-", os.path.basename(dist)).group(1)
+        dist_name = re.match(r"^(easysearch\d*)-", os.path.basename(dist)).group(1)
 
         # Build the venv and install the dist
         run("python", "-m", "venv", os.path.join(tmp_dir, "venv"))
@@ -71,13 +67,13 @@ def test_dist(dist):
         run(venv_python, "-m", "pip", "install", dist)
 
         # Test the sync namespaces
-        run(venv_python, "-c", f"from {dist_name} import Elasticsearch")
+        run(venv_python, "-c", f"from {dist_name} import Easysearch")
         run(
             venv_python,
             "-c",
             f"from {dist_name}.helpers import scan, bulk, streaming_bulk, reindex",
         )
-        run(venv_python, "-c", f"from {dist_name} import Elasticsearch")
+        run(venv_python, "-c", f"from {dist_name} import Easysearch")
         run(
             venv_python,
             "-c",
@@ -88,7 +84,7 @@ def test_dist(dist):
         run(
             venv_python,
             "-c",
-            f"from {dist_name} import AsyncElasticsearch",
+            f"from {dist_name} import AsyncEasysearch",
             expect_exit_code=256,
         )
         run(
@@ -100,7 +96,7 @@ def test_dist(dist):
 
         # Install aiohttp and see that async is now available
         run(venv_python, "-m", "pip", "install", "aiohttp")
-        run(venv_python, "-c", f"from {dist_name} import AsyncElasticsearch")
+        run(venv_python, "-c", f"from {dist_name} import AsyncEasysearch")
         run(
             venv_python,
             "-c",
@@ -109,18 +105,18 @@ def test_dist(dist):
 
         # Only need to test 'async_types' for non-aliased package
         # since 'aliased_types' tests both async and sync.
-        if dist_name == "elasticsearch":
+        if dist_name == "easysearch":
             run(
                 venv_python,
                 "-m",
                 "mypy",
                 "--strict",
-                os.path.join(base_dir, "test_elasticsearch/test_types/async_types.py"),
+                os.path.join(base_dir, "test_easysearch/test_types/async_types.py"),
             )
 
         # Ensure that the namespaces are correct for the dist
         for suffix in ("", "1", "2", "5", "6", "7", "8", "9", "10"):
-            distx_name = f"elasticsearch{suffix}"
+            distx_name = f"easysearch{suffix}"
             run(
                 venv_python,
                 "-c",
@@ -128,15 +124,15 @@ def test_dist(dist):
                 expect_exit_code=256 if distx_name != dist_name else 0,
             )
 
-        # Check that sync types work for 'elasticsearch' and
-        # that aliased types work for 'elasticsearchX'
-        if dist_name == "elasticsearch":
+        # Check that sync types work for 'easysearch' and
+        # that aliased types work for 'easysearchX'
+        if dist_name == "easysearch":
             run(
                 venv_python,
                 "-m",
                 "mypy",
                 "--strict",
-                os.path.join(base_dir, "test_elasticsearch/test_types/sync_types.py"),
+                os.path.join(base_dir, "test_easysearch/test_types/sync_types.py"),
             )
         else:
             run(
@@ -144,9 +140,7 @@ def test_dist(dist):
                 "-m",
                 "mypy",
                 "--strict",
-                os.path.join(
-                    base_dir, "test_elasticsearch/test_types/aliased_types.py"
-                ),
+                os.path.join(base_dir, "test_easysearch/test_types/aliased_types.py"),
             )
 
         # Uninstall the dist, see that we can't import things anymore
@@ -154,17 +148,17 @@ def test_dist(dist):
         run(
             venv_python,
             "-c",
-            f"from {dist_name} import Elasticsearch",
+            f"from {dist_name} import Easysearch",
             expect_exit_code=256,
         )
 
 
 def main():
-    run("git", "checkout", "--", "setup.py", "elasticsearch/")
+    run("git", "checkout", "--", "setup.py", "easysearch/")
     run("rm", "-rf", "build/", "dist/*", "*.egg-info", ".eggs")
 
     # Grab the major version to be used as a suffix.
-    version_path = os.path.join(base_dir, "elasticsearch/_version.py")
+    version_path = os.path.join(base_dir, "easysearch/_version.py")
     with open(version_path) as f:
         version = re.search(
             r"^__versionstr__\s+=\s+[\"\']([^\"\']+)[\"\']", f.read(), re.M
@@ -222,12 +216,12 @@ def main():
 
         # Rename the module to fit the suffix.
         shutil.move(
-            os.path.join(base_dir, "elasticsearch"),
-            os.path.join(base_dir, "elasticsearch%s" % suffix),
+            os.path.join(base_dir, "easysearch"),
+            os.path.join(base_dir, "easysearch%s" % suffix),
         )
 
-        # Ensure that the version within 'elasticsearch/_version.py' is correct.
-        version_path = os.path.join(base_dir, f"elasticsearch{suffix}/_version.py")
+        # Ensure that the version within 'easysearch/_version.py' is correct.
+        version_path = os.path.join(base_dir, f"easysearch{suffix}/_version.py")
         with open(version_path) as f:
             version_data = f.read()
         version_data = re.sub(
@@ -245,11 +239,11 @@ def main():
             setup_py = f.read()
         with open(setup_py_path, "w") as f:
             f.truncate()
-            assert 'package_name = "elasticsearch"' in setup_py
+            assert 'package_name = "easysearch"' in setup_py
             f.write(
                 setup_py.replace(
-                    'package_name = "elasticsearch"',
-                    'package_name = "elasticsearch%s"' % suffix,
+                    'package_name = "easysearch"',
+                    'package_name = "easysearch%s"' % suffix,
                 )
             )
 
@@ -257,9 +251,9 @@ def main():
         run("python", "setup.py", "sdist", "bdist_wheel")
 
         # Clean up everything.
-        run("git", "checkout", "--", "setup.py", "elasticsearch/")
+        run("git", "checkout", "--", "setup.py", "easysearch/")
         if suffix:
-            run("rm", "-rf", "elasticsearch%s/" % suffix)
+            run("rm", "-rf", "easysearch%s/" % suffix)
 
     # Test everything that got created
     dists = os.listdir(os.path.join(base_dir, "dist"))

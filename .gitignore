@@ -140,7 +140,7 @@ cython_debug/
 # Pycharm project settings
 .idea
 
-# elasticsearch files
-test_elasticsearch/cover
-test_elasticsearch/local.py
+# easysearch files
+test_easysearch/cover
+test_easysearch/local.py
 .ci/output

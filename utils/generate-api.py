@@ -1,20 +1,17 @@
 #!/usr/bin/env python
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import os
 import json
@@ -30,7 +27,6 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, TemplateNotFound
 import unasync
 
-
 http = urllib3.PoolManager()
 
 # line to look for in the original source file
@@ -42,7 +38,7 @@ BRANCH_NAME = "7.10"
 CODE_ROOT = Path(__file__).absolute().parent.parent
 BASE_PATH = (
     CODE_ROOT.parent
-    / "elasticsearch"
+    / "easysearch"
     / "rest-api-spec"
     / "src"
     / "main"
@@ -52,7 +48,7 @@ BASE_PATH = (
 )
 XPACK_PATH = (
     CODE_ROOT.parent
-    / "elasticsearch"
+    / "easysearch"
     / "x-pack"
     / "plugin"
     / "src"
@@ -150,7 +146,7 @@ class Module:
     def filepath(self):
         return (
             CODE_ROOT
-            / f"elasticsearch/_async/client/{self.namespace}.py{'i' if self.is_pyi else ''}"
+            / f"easysearch/_async/client/{self.namespace}.py{'i' if self.is_pyi else ''}"
         )
 
 
@@ -190,8 +186,8 @@ class API:
             # Try setting doc refs like 'current' and 'master' to our branches ref.
             if BRANCH_NAME is not None:
                 revised_url = re.sub(
-                    "/elasticsearch/reference/[^/]+/",
-                    f"/elasticsearch/reference/{BRANCH_NAME}/",
+                    "/easysearch/reference/[^/]+/",
+                    f"/easysearch/reference/{BRANCH_NAME}/",
                     self.doc_url,
                 )
                 if is_valid_url(revised_url):
@@ -375,33 +371,29 @@ def dump_modules(modules):
     additional_replacements = {
         # We want to rewrite to 'Transport' instead of 'SyncTransport', etc
         "AsyncTransport": "Transport",
-        "AsyncElasticsearch": "Elasticsearch",
+        "AsyncEasysearch": "Easysearch",
         # We don't want to rewrite this class
         "AsyncSearchClient": "AsyncSearchClient",
     }
     rules = [
         unasync.Rule(
-            fromdir="/elasticsearch/_async/client/",
-            todir="/elasticsearch/client/",
+            fromdir="/easysearch/_async/client/",
+            todir="/easysearch/client/",
             additional_replacements=additional_replacements,
         ),
     ]
 
     filepaths = []
-    for root, _, filenames in os.walk(CODE_ROOT / "elasticsearch/_async"):
+    for root, _, filenames in os.walk(CODE_ROOT / "easysearch/_async"):
         for filename in filenames:
-            if (
-                filename.rpartition(".")[-1]
-                in (
-                    "py",
-                    "pyi",
-                )
-                and not filename.startswith("utils.py")
-            ):
+            if filename.rpartition(".")[-1] in (
+                "py",
+                "pyi",
+            ) and not filename.startswith("utils.py"):
                 filepaths.append(os.path.join(root, filename))
 
     unasync.unasync_files(filepaths, rules)
-    blacken(CODE_ROOT / "elasticsearch")
+    blacken(CODE_ROOT / "easysearch")
 
 
 if __name__ == "__main__":

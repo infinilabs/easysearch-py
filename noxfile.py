@@ -1,28 +1,24 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import nox
-
 
 SOURCE_FILES = (
     "setup.py",
     "noxfile.py",
-    "elasticsearch/",
-    "test_elasticsearch/",
+    "easysearch/",
+    "test_easysearch/",
     "utils/",
 )
 
@@ -39,7 +35,7 @@ def test(session):
 def blacken(session):
     session.install("black")
 
-    session.run("black", "--target-version=py27", *SOURCE_FILES)
+    session.run("black", "--target-version=py38", *SOURCE_FILES)
     session.run("python", "utils/license-headers.py", "fix", *SOURCE_FILES)
 
     lint(session)
@@ -49,7 +45,7 @@ def blacken(session):
 def lint(session):
     session.install("flake8", "black", "mypy")
 
-    session.run("black", "--target-version=py27", "--check", *SOURCE_FILES)
+    session.run("black", "--target-version=py38", "--check", *SOURCE_FILES)
     session.run("flake8", *SOURCE_FILES)
     session.run("python", "utils/license-headers.py", "check", *SOURCE_FILES)
 
@@ -58,15 +54,15 @@ def lint(session):
 
     # Run mypy on the package and then the type examples separately for
     # the two different mypy use-cases, ourselves and our users.
-    session.run("mypy", "--strict", "elasticsearch/")
-    session.run("mypy", "--strict", "test_elasticsearch/test_types/sync_types.py")
-    session.run("mypy", "--strict", "test_elasticsearch/test_types/async_types.py")
+    session.run("mypy", "--strict", "easysearch/")
+    session.run("mypy", "--strict", "test_easysearch/test_types/sync_types.py")
+    session.run("mypy", "--strict", "test_easysearch/test_types/async_types.py")
 
     # Make sure we don't require aiohttp to be installed for users to
     # receive type hint information from mypy.
     session.run("python", "-m", "pip", "uninstall", "--yes", "aiohttp")
-    session.run("mypy", "--strict", "elasticsearch/")
-    session.run("mypy", "--strict", "test_elasticsearch/test_types/sync_types.py")
+    session.run("mypy", "--strict", "easysearch/")
+    session.run("mypy", "--strict", "test_easysearch/test_types/sync_types.py")
 
 
 @nox.session()

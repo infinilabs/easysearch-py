@@ -1,19 +1,16 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import asyncio
 import logging
@@ -30,8 +27,7 @@ from ..exceptions import (
     SerializationError,
 )
 
-
-logger = logging.getLogger("elasticsearch")
+logger = logging.getLogger("easysearch")
 
 
 class AsyncTransport(Transport):
@@ -48,8 +44,8 @@ class AsyncTransport(Transport):
         """
         :arg hosts: list of dictionaries, each containing keyword arguments to
             create a `connection_class` instance
-        :arg connection_class: subclass of :class:`~elasticsearch.Connection` to use
-        :arg connection_pool_class: subclass of :class:`~elasticsearch.ConnectionPool` to use
+        :arg connection_class: subclass of :class:`~easysearch.Connection` to use
+        :arg connection_pool_class: subclass of :class:`~easysearch.ConnectionPool` to use
         :arg host_info_callback: callback responsible for taking the node information from
             `/_cluster/nodes`, along with already extracted information, and
             producing a list of arguments (same as `hosts` parameter)
@@ -105,7 +101,7 @@ class AsyncTransport(Transport):
         that was deferred within __init__() should be done here now.
 
         This method will only be called once per AsyncTransport instance
-        and is called from one of AsyncElasticsearch.__aenter__(),
+        and is called from one of AsyncEasysearch.__aenter__(),
         AsyncTransport.perform_request() or AsyncTransport.get_connection()
         """
         # Detect the async loop we're running in and set it
@@ -254,7 +250,7 @@ class AsyncTransport(Transport):
         Mark a connection as dead (failed) in the connection pool. If sniffing
         on failure is enabled this will initiate the sniffing process.
 
-        :arg connection: instance of :class:`~elasticsearch.Connection` that failed
+        :arg connection: instance of :class:`~easysearch.Connection` that failed
         """
         self.connection_pool.mark_dead(connection)
         if self.sniff_on_connection_fail:
@@ -278,9 +274,9 @@ class AsyncTransport(Transport):
         :arg method: HTTP method to use
         :arg url: absolute url (without host) to target
         :arg headers: dictionary of headers, will be handed over to the
-            underlying :class:`~elasticsearch.Connection` class
+            underlying :class:`~easysearch.Connection` class
         :arg params: dictionary of query parameters, will be handed over to the
-            underlying :class:`~elasticsearch.Connection` class for serialization
+            underlying :class:`~easysearch.Connection` class for serialization
         :arg body: body of the request, will be serialized using serializer and
             passed to the connection
         """

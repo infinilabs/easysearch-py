@@ -1,26 +1,23 @@
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 from __future__ import unicode_literals
 import warnings
 
-from elasticsearch.client import _normalize_hosts, Elasticsearch
+from easysearch.client import _normalize_hosts, Easysearch
 
-from ..test_cases import TestCase, ElasticsearchTestCase
+from ..test_cases import TestCase, EasysearchTestCase
 
 
 class TestNormalizeHosts(TestCase):
@@ -28,23 +25,25 @@ class TestNormalizeHosts(TestCase):
         self.assertEqual([{}], _normalize_hosts(None))
 
     def test_strings_are_used_as_hostnames(self):
-        self.assertEqual([{"host": "elastic.co"}], _normalize_hosts(["elastic.co"]))
+        self.assertEqual(
+            [{"host": "easysearch.cn"}], _normalize_hosts(["easysearch.cn"])
+        )
 
     def test_strings_are_parsed_for_port_and_user(self):
         self.assertEqual(
             [
-                {"host": "elastic.co", "port": 42},
-                {"host": "elastic.co", "http_auth": "user:secre]"},
+                {"host": "easysearch.cn", "port": 42},
+                {"host": "easysearch.cn", "http_auth": "user:secre]"},
             ],
-            _normalize_hosts(["elastic.co:42", "user:secre%5D@elastic.co"]),
+            _normalize_hosts(["easysearch.cn:42", "user:secre%5D@easysearch.cn"]),
         )
 
     def test_strings_are_parsed_for_scheme(self):
         self.assertEqual(
             [
-                {"host": "elastic.co", "port": 42, "use_ssl": True},
+                {"host": "easysearch.cn", "port": 42, "use_ssl": True},
                 {
-                    "host": "elastic.co",
+                    "host": "easysearch.cn",
                     "http_auth": "user:secret",
                     "use_ssl": True,
                     "port": 443,
@@ -52,7 +51,7 @@ class TestNormalizeHosts(TestCase):
                 },
             ],
             _normalize_hosts(
-                ["https://elastic.co:42", "https://user:secret@elastic.co/prefix"]
+                ["https://easysearch.cn:42", "https://user:secret@easysearch.cn/prefix"]
             ),
         )
 
@@ -63,10 +62,10 @@ class TestNormalizeHosts(TestCase):
         )
 
     def test_single_string_is_wrapped_in_list(self):
-        self.assertEqual([{"host": "elastic.co"}], _normalize_hosts("elastic.co"))
+        self.assertEqual([{"host": "easysearch.cn"}], _normalize_hosts("easysearch.cn"))
 
 
-class TestClient(ElasticsearchTestCase):
+class TestClient(EasysearchTestCase):
     def test_request_timeout_is_passed_through_unescaped(self):
         self.client.ping(request_timeout=0.1)
         calls = self.assert_url_called("HEAD", "/")
@@ -102,20 +101,20 @@ class TestClient(ElasticsearchTestCase):
         self.assertEqual([({"from": "10"}, {}, None)], calls)
 
     def test_repr_contains_hosts(self):
-        self.assertEqual("<Elasticsearch([{}])>", repr(self.client))
+        self.assertEqual("<Easysearch([{}])>", repr(self.client))
 
     def test_repr_subclass(self):
-        class OtherElasticsearch(Elasticsearch):
+        class OtherEasysearch(Easysearch):
             pass
 
-        self.assertEqual("<OtherElasticsearch([{}])>", repr(OtherElasticsearch()))
+        self.assertEqual("<OtherEasysearch([{}])>", repr(OtherEasysearch()))
 
     def test_repr_contains_hosts_passed_in(self):
-        self.assertIn("es.org", repr(Elasticsearch(["es.org:123"])))
+        self.assertIn("es.org", repr(Easysearch(["es.org:123"])))
 
     def test_repr_truncates_host_to_5(self):
         hosts = [{"host": "es" + str(i)} for i in range(10)]
-        es = Elasticsearch(hosts)
+        es = Easysearch(hosts)
         self.assertNotIn("es5", repr(es))
         self.assertIn("...", repr(es))
 

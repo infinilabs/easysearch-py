@@ -1,27 +1,27 @@
-Python Elasticsearch Client
+Python Easysearch Client
 ===========================
 
-Official low-level client for Elasticsearch. Its goal is to provide common
-ground for all Elasticsearch-related code in Python; because of this it tries
+Official low-level client for Easysearch. Its goal is to provide common
+ground for all Easysearch-related code in Python; because of this it tries
 to be opinion-free and very extendable.
 
 
 Installation
 ------------
 
-Install the ``elasticsearch`` package with `pip
-<https://pypi.org/project/elasticsearch>`_:
+Install the ``easysearch`` package with `pip
+<https://pypi.org/project/easysearch>`_:
 
 .. code-block:: console
 
-    $ python -m pip install elasticsearch
+    $ python -m pip install easysearch
 
 If your application uses async/await in Python you can install with
 the ``async`` extra:
 
 .. code-block:: console
 
-    $ python -m pip install elasticsearch[async]
+    $ python -m pip install easysearch[async]
 
 Read more about `how to use asyncio with this project <async>`_.
 
@@ -29,19 +29,19 @@ Read more about `how to use asyncio with this project <async>`_.
 Compatibility
 -------------
 
-The library is compatible with all Elasticsearch versions since ``0.90.x`` but you
+The library is compatible with all Easysearch versions since ``0.90.x`` but you
 **have to use a matching major version**:
 
-For **Elasticsearch 7.0** and later, use the major version 7 (``7.x.y``) of the
+For **Easysearch 7.0** and later, use the major version 7 (``7.x.y``) of the
 library.
 
-For **Elasticsearch 6.0** and later, use the major version 6 (``6.x.y``) of the
+For **Easysearch 6.0** and later, use the major version 6 (``6.x.y``) of the
 library.
 
-For **Elasticsearch 5.0** and later, use the major version 5 (``5.x.y``) of the
+For **Easysearch 5.0** and later, use the major version 5 (``5.x.y``) of the
 library.
 
-For **Elasticsearch 2.0** and later, use the major version 2 (``2.x.y``) of the
+For **Easysearch 2.0** and later, use the major version 2 (``2.x.y``) of the
 library, and so on.
 
 The recommended way to set your requirements in your `setup.py` or
@@ -49,20 +49,20 @@ The recommended way to set your requirements in your `setup.py` or
 
 .. code-block:: python
 
-    # Elasticsearch 7.x
-    elasticsearch>=7.0.0,<8.0.0
+    # Easysearch 7.x
+    easysearch>=7.0.0,<8.0.0
 
-    # Elasticsearch 6.x
-    elasticsearch>=6.0.0,<7.0.0
+    # Easysearch 6.x
+    easysearch>=6.0.0,<7.0.0
 
-    # Elasticsearch 5.x
-    elasticsearch>=5.0.0,<6.0.0
+    # Easysearch 5.x
+    easysearch>=5.0.0,<6.0.0
 
-    # Elasticsearch 2.x
-    elasticsearch>=2.0.0,<3.0.0
+    # Easysearch 2.x
+    easysearch>=2.0.0,<3.0.0
 
 If you have a need to have multiple versions installed at the same time older
-versions are also released as ``elasticsearch2``, ``elasticsearch5`` and ``elasticsearch6``.
+versions are also released as ``easysearch2``, ``easysearch5`` and ``easysearch6``.
 
 
 Example Usage
@@ -71,12 +71,12 @@ Example Usage
 .. code-block:: python
 
     from datetime import datetime
-    from elasticsearch import Elasticsearch
-    es = Elasticsearch()
+    from easysearch import Easysearch
+    es = Easysearch()
 
     doc = {
         'author': 'kimchy',
-        'text': 'Elasticsearch: cool. bonsai cool.',
+        'text': 'Easysearch: cool. bonsai cool.',
         'timestamp': datetime.now(),
     }
     res = es.index(index="test-index", id=1, body=doc)
@@ -96,19 +96,19 @@ Example Usage
 Features
 --------
 
-This client was designed as very thin wrapper around Elasticsearch's REST API to
+This client was designed as very thin wrapper around Easysearch's REST API to
 allow for maximum flexibility. This means that there are no opinions in this
 client; it also means that some of the APIs are a little cumbersome to use from
 Python. We have created some :ref:`helpers` to help with this issue as well as
-a more high level library (`elasticsearch-dsl`_) on top of this one to provide
-a more convenient way of working with Elasticsearch.
+a more high level library (`easysearch-dsl`_) on top of this one to provide
+a more convenient way of working with Easysearch.
 
-.. _elasticsearch-dsl: https://elasticsearch-dsl.readthedocs.io/
+.. _easysearch-dsl: https://easysearch-dsl.readthedocs.io/
 
 Persistent Connections
 ~~~~~~~~~~~~~~~~~~~~~~
 
-``elasticsearch-py`` uses persistent connections inside of individual connection
+``easysearch-py`` uses persistent connections inside of individual connection
 pools (one per each configured or sniffed node). Out of the box you can choose
 between two ``http`` protocol implementations. See :ref:`transports` for more
 information.
@@ -116,14 +116,14 @@ information.
 The transport layer will create an instance of the selected connection class
 per node and keep track of the health of individual nodes - if a node becomes
 unresponsive (throwing exceptions while connecting to it) it's put on a timeout
-by the :class:`~elasticsearch.ConnectionPool` class and only returned to the
+by the :class:`~easysearch.ConnectionPool` class and only returned to the
 circulation after the timeout is over (or when no live nodes are left). By
 default nodes are randomized before being passed into the pool and round-robin
 strategy is used for load balancing.
 
 You can customize this behavior by passing parameters to the
 :ref:`connection_api` (all keyword arguments to the
-:class:`~elasticsearch.Elasticsearch` class will be passed through). If what
+:class:`~easysearch.Easysearch` class will be passed through). If what
 you want to accomplish is not supported you should be able to create a subclass
 of the relevant component and pass it in as a parameter to be used instead of
 the default implementation.
@@ -133,7 +133,7 @@ Automatic Retries
 ~~~~~~~~~~~~~~~~~
 
 If a connection to a node fails due to connection issues (raises
-:class:`~elasticsearch.ConnectionError`) it is considered in faulty state. It
+:class:`~easysearch.ConnectionError`) it is considered in faulty state. It
 will be placed on hold for ``dead_timeout`` seconds and the request will be
 retried on another node. If a connection fails multiple times in a row the
 timeout will get progressively larger to avoid hitting a node that's, by all
@@ -141,7 +141,7 @@ indication, down. If no live connection is available, the connection that has
 the smallest timeout will be used.
 
 By default retries are not triggered by a timeout
-(:class:`~elasticsearch.ConnectionTimeout`), set ``retry_on_timeout`` to
+(:class:`~easysearch.ConnectionTimeout`), set ``retry_on_timeout`` to
 ``True`` to also retry on timeouts.
 
 .. _sniffing:
@@ -151,23 +151,23 @@ Sniffing
 
 The client can be configured to inspect the cluster state to get a list of
 nodes upon startup, periodically and/or on failure. See
-:class:`~elasticsearch.Transport` parameters for details.
+:class:`~easysearch.Transport` parameters for details.
 
 Some example configurations:
 
  .. code-block:: python
 
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
     # by default we don't sniff, ever
-    es = Elasticsearch()
+    es = Easysearch()
 
     # you can specify to sniff on startup to inspect the cluster and load
     # balance across all nodes
-    es = Elasticsearch(["seed1", "seed2"], sniff_on_start=True)
+    es = Easysearch(["seed1", "seed2"], sniff_on_start=True)
 
     # you can also sniff periodically and/or after failure:
-    es = Elasticsearch(["seed1", "seed2"],
+    es = Easysearch(["seed1", "seed2"],
               sniff_on_start=True,
               sniff_on_connection_fail=True,
               sniffer_timeout=60)
@@ -188,7 +188,7 @@ raise the limit:
 .. code-block:: python
 
     # allow up to 25 connections to each node
-    es = Elasticsearch(["host1", "host2"], maxsize=25)
+    es = Easysearch(["host1", "host2"], maxsize=25)
 
 .. note::
 
@@ -202,18 +202,18 @@ TLS/SSL and Authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can configure the client to use ``SSL`` for connecting to your
-elasticsearch cluster, including certificate verification and HTTP auth:
+easysearch cluster, including certificate verification and HTTP auth:
 
 .. code-block:: python
 
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
     # you can use RFC-1738 to specify the url
-    es = Elasticsearch(['https://user:secret@localhost:443'])
+    es = Easysearch(['https://user:secret@localhost:443'])
 
     # ... or specify common parameters as kwargs
 
-    es = Elasticsearch(
+    es = Easysearch(
         ['localhost', 'otherhost'],
         http_auth=('user', 'secret'),
         scheme="https",
@@ -225,7 +225,7 @@ elasticsearch cluster, including certificate verification and HTTP auth:
     from ssl import create_default_context
 
     context = create_default_context(cafile="path/to/cert.pem")
-    es = Elasticsearch(
+    es = Easysearch(
         ['localhost', 'otherhost'],
         http_auth=('user', 'secret'),
         scheme="https",
@@ -235,13 +235,13 @@ elasticsearch cluster, including certificate verification and HTTP auth:
 
 ..  warning::
 
-    ``elasticsearch-py`` doesn't ship with default set of root certificates. To
+    ``easysearch-py`` doesn't ship with default set of root certificates. To
     have working SSL certificate validation you need to either specify your own
     as ``cafile`` or ``capath`` or ``cadata``  or install `certifi`_ which will
     be picked up automatically.
 
 
-See class :class:`~elasticsearch.Urllib3HttpConnection` for detailed
+See class :class:`~easysearch.Urllib3HttpConnection` for detailed
 description of the options.
 
 .. _certifi: http://certifiio.readthedocs.io/en/latest/
@@ -250,9 +250,9 @@ Connecting via Cloud ID
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Cloud ID is an easy way to configure your client to work
-with your Elastic Cloud deployment. Combine the ``cloud_id``
+with your Cloud deployment. Combine the ``cloud_id``
 with either ``http_auth`` or ``api_key`` to authenticate
-with your Elastic Cloud deployment.
+with your Cloud deployment.
 
 Using ``cloud_id`` enables TLS verification and HTTP compression by default
 and sets the port to ``443`` unless otherwise overwritten via the ``port`` parameter
@@ -260,42 +260,42 @@ or the port value encoded within ``cloud_id``.  Using Cloud ID also disables sni
 
 .. code-block:: python
 
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
-    es = Elasticsearch(
+    es = Easysearch(
         cloud_id="cluster-1:dXMa5Fx...",
-        http_auth=("elastic", "<password>"),
+        http_auth=("admin", "<password>"),
     )
 
 API Key Authentication
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can configure the client to use Elasticsearch's `API Key`_ for connecting to your cluster.
-Please note this authentication method has been introduced with release of Elasticsearch ``6.7.0``.
+You can configure the client to use Easysearch's `API Key`_ for connecting to your cluster.
+Please note this authentication method has been introduced with release of Easysearch ``6.7.0``.
 
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
     # you can use the api key tuple
-    es = Elasticsearch(
+    es = Easysearch(
         ['node-1', 'node-2', 'node-3'],
         api_key=('id', 'api_key'),
     )
 
     # or you pass the base 64 encoded token
-    es = Elasticsearch(
+    es = Easysearch(
         ['node-1', 'node-2', 'node-3'],
         api_key='base64encoded tuple',
     )
 
-.. _API Key: https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+.. _API Key: https://github.com/infinilabs/easysearch-py
 
 Logging
 ~~~~~~~
 
-``elasticsearch-py`` uses the standard `logging library`_ from python to define
-two loggers: ``elasticsearch`` and ``elasticsearch.trace``. ``elasticsearch``
+``easysearch-py`` uses the standard `logging library`_ from python to define
+two loggers: ``easysearch`` and ``easysearch.trace``. ``easysearch``
 is used by the client to log standard activity, depending on the log level.
-``elasticsearch.trace`` can be used to log requests to the server in the form
+``easysearch.trace`` can be used to log requests to the server in the form
 of ``curl`` commands using pretty-printed json that can then be executed from
 command line. Because it is designed to be shared (for example to demonstrate
 an issue) it also just uses ``localhost:9200`` as the address instead of the
@@ -307,7 +307,7 @@ already it is set to `propagate=False` so it needs to be activated separately.
 Type Hints
 ~~~~~~~~~~
 
-Starting in ``elasticsearch-py`` v7.10.0 the library now ships with `type hints`_
+Starting in ``easysearch-py`` v7.10.0 the library now ships with `type hints`_
 and supports basic static type analysis with tools like `Mypy`_ and `Pyright`_.
 
 If we write a script that has a type error like using ``request_timeout`` with
@@ -316,16 +316,16 @@ a ``str`` argument instead of ``float`` and then run Mypy on the script:
 .. code-block:: python
 
     # script.py
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
-    es = Elasticsearch(...)
+    es = Easysearch(...)
     es.search(
         index="test-index",
         request_timeout="5"  # type error!
     )
 
     # $ mypy script.py
-    # script.py:5: error: Argument "request_timeout" to "search" of "Elasticsearch" has 
+    # script.py:5: error: Argument "request_timeout" to "search" of "Easysearch" has 
     #                     incompatible type "str"; expected "Union[int, float, None]"
     # Found 1 error in 1 file (checked 1 source file)
 
@@ -371,10 +371,10 @@ documents. This will configure compression.
 
 .. code-block:: python
 
-   from elasticsearch import Elasticsearch
-   es = Elasticsearch(hosts, http_compress=True)
+   from easysearch import Easysearch
+   es = Easysearch(hosts, http_compress=True)
 
-Compression is enabled by default when connecting to Elastic Cloud via ``cloud_id``.
+Compression is enabled by default when connecting to Cloud via ``cloud_id``.
 
 Running on AWS with IAM
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -384,13 +384,13 @@ the `requests-aws4auth`_ package:
 
 .. code-block:: python
 
-    from elasticsearch import Elasticsearch, RequestsHttpConnection
+    from easysearch import Easysearch, RequestsHttpConnection
     from requests_aws4auth import AWS4Auth
 
     host = 'YOURHOST.us-east-1.es.amazonaws.com'
     awsauth = AWS4Auth(YOUR_ACCESS_KEY, YOUR_SECRET_KEY, REGION, 'es')
 
-    es = Elasticsearch(
+    es = Easysearch(
         hosts=[{'host': host, 'port': 443}],
         http_auth=awsauth,
         use_ssl=True,
@@ -412,7 +412,7 @@ However, you can implement your own custom serializer
 
 .. code-block:: python
 
-   from elasticsearch.serializer import JSONSerializer
+   from easysearch.serializer import JSONSerializer
 
    class SetEncoder(JSONSerializer):
        def default(self, obj):
@@ -422,20 +422,20 @@ However, you can implement your own custom serializer
                return 'CustomSomethingRepresentation'
            return JSONSerializer.default(self, obj)
 
-   es = Elasticsearch(serializer=SetEncoder())
+   es = Easysearch(serializer=SetEncoder())
 
-.. _JSONSerializer: https://github.com/elastic/elasticsearch-py/blob/master/elasticsearch/serializer.py#L24
+.. _JSONSerializer: https://github.com/infinilabs/easysearch-py/blob/master/easysearch/serializer.py#L24
 
 
-Elasticsearch-DSL
+Easysearch-DSL
 -----------------
 
 For a more high level client library with more limited scope, have a look at
-`elasticsearch-dsl`_ - a more pythonic library sitting on top of
-``elasticsearch-py``.
+`easysearch-dsl`_ - a more pythonic library sitting on top of
+``easysearch-py``.
 
-`elasticsearch-dsl`_ provides a more convenient and idiomatic way to write and manipulate
-`queries`_ by mirroring the terminology and structure of Elasticsearch JSON DSL
+`easysearch-dsl`_ provides a more convenient and idiomatic way to write and manipulate
+`queries`_ by mirroring the terminology and structure of Easysearch JSON DSL
 while exposing the whole range of the DSL from Python
 either directly using defined classes or a queryset-like expressions.
 
@@ -443,9 +443,9 @@ It also provides an optional `persistence layer`_ for working with documents as
 Python objects in an ORM-like fashion: defining mappings, retrieving and saving
 documents, wrapping the document data in user-defined classes.
 
-.. _elasticsearch-dsl: https://elasticsearch-dsl.readthedocs.io/
-.. _queries: https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html
-.. _persistence layer: https://elasticsearch-dsl.readthedocs.io/en/latest/persistence.html#doctype
+.. _easysearch-dsl: https://easysearch-dsl.readthedocs.io/
+.. _queries: https://easysearch-dsl.readthedocs.io/en/latest/search_dsl.html
+.. _persistence layer: https://easysearch-dsl.readthedocs.io/en/latest/persistence.html#doctype
 
 
 Contents
@@ -455,7 +455,6 @@ Contents
    :maxdepth: 2
 
    api
-   xpack
    exceptions
    async
    connection
@@ -467,7 +466,7 @@ Contents
 License
 -------
 
-Copyright 2020 Elasticsearch B.V
+Copyright 2021-2026 INFINI Labs
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

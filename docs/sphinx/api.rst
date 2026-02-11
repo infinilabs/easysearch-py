@@ -25,8 +25,8 @@ Ignore
 ~~~~~~
 
 An API call is considered successful (and will return a response) if
-elasticsearch returns a 2XX response. Otherwise an instance of
-:class:`~elasticsearch.TransportError` (or a more specific subclass) will be
+easysearch returns a 2XX response. Otherwise an instance of
+:class:`~easysearch.TransportError` (or a more specific subclass) will be
 raised. You can see other exception and error states in :ref:`exceptions`. If
 you do not wish an exception to be raised you can always pass in an ``ignore``
 parameter with either a single status code that should be ignored or a list of
@@ -34,8 +34,8 @@ them:
 
 .. code-block:: python
 
-    from elasticsearch import Elasticsearch
-    es = Elasticsearch()
+    from easysearch import Easysearch
+    es = Easysearch()
 
     # ignore 400 cause by IndexAlreadyExistsException when creating an index
     es.indices.create(index='test-index', ignore=400)
@@ -48,7 +48,7 @@ Timeout
 ~~~~~~~
 
 Global timeout can be set when constructing the client (see
-:class:`~elasticsearch.Connection`'s ``timeout`` parameter) or on a per-request
+:class:`~easysearch.Connection`'s ``timeout`` parameter) or on a per-request
 basis using ``request_timeout`` (float value in seconds) as part of any API
 call, this value will get passed to the ``perform_request`` method of the
 connection class:
@@ -61,34 +61,34 @@ connection class:
 .. note::
 
     Some API calls also accept a ``timeout`` parameter that is passed to
-    Elasticsearch server. This timeout is internal and doesn't guarantee that the
+    Easysearch server. This timeout is internal and doesn't guarantee that the
     request will end in the specified time.
 
 Tracking Requests with Opaque ID
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can enrich your requests against Elasticsearch with an identifier string, that allows you to discover this identifier
-in `deprecation logs <https://www.elastic.co/guide/en/elasticsearch/reference/7.4/logging.html#deprecation-logging>`_, to support you with
-`identifying search slow log origin <https://www.elastic.co/guide/en/elasticsearch/reference/7.4/index-modules-slowlog.html#_identifying_search_slow_log_origin>`_
-or to help with `identifying running tasks <https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#_identifying_running_tasks>`_.
+You can enrich your requests against Easysearch with an identifier string, that allows you to discover this identifier
+in deprecation logs, to support you with
+identifying search slow log origin
+or to help with identifying running tasks.
 
  .. code-block:: python
 
-    from elasticsearch import Elasticsearch
+    from easysearch import Easysearch
 
-    client = Elasticsearch()
+    client = Easysearch()
 
     # You can apply X-Opaque-Id in any API request via 'opaque_id':
     resp = client.get(index="test", id="1", opaque_id="request-1")
 
 
-.. py:module:: elasticsearch
+.. py:module:: easysearch
 
 Response Filtering
 ~~~~~~~~~~~~~~~~~~
 
 The ``filter_path`` parameter is used to reduce the response returned by
-elasticsearch.  For example, to only return ``_id`` and ``_type``, do:
+easysearch.  For example, to only return ``_id`` and ``_type``, do:
 
 .. code-block:: python
 
@@ -101,13 +101,13 @@ field's name:
 
     es.search(index='test-index', filter_path=['hits.hits._*'])
 
-Elasticsearch
+Easysearch
 -------------
 
-.. autoclass:: Elasticsearch
+.. autoclass:: Easysearch
    :members:
 
-.. py:module:: elasticsearch.client
+.. py:module:: easysearch.client
 
 Async Search
 ------------
@@ -154,7 +154,7 @@ Nodes
 Remote
 ------
 
-`Remote Cluster Info API <https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html>`_
+Remote Cluster Info API
 allows you to retrieve all of the configured remote cluster information.
 
 .. autoclass:: RemoteClient

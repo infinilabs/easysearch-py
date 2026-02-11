@@ -12,14 +12,14 @@ Bulk helpers
 There are several helpers for the ``bulk`` API since its requirement for
 specific formatting and other considerations can make it cumbersome if used directly.
 
-All bulk helpers accept an instance of ``Elasticsearch`` class and an iterable
+All bulk helpers accept an instance of ``Easysearch`` class and an iterable
 ``actions`` (any iterable, can also be a generator, which is ideal in most
 cases since it will allow you to index large datasets without the need of
 loading them into memory).
 
 The items in the ``action`` iterable should be the documents we wish to index
 in several formats. The most common one is the same  as returned by
-:meth:`~elasticsearch.Elasticsearch.search`, for example:
+:meth:`~easysearch.Easysearch.search`, for example:
 
 .. code:: python
 
@@ -47,7 +47,7 @@ from the doc and use the rest as the document data:
         "body": "..."
     }
 
-The :meth:`~elasticsearch.Elasticsearch.bulk` api accepts ``index``, ``create``,
+The :meth:`~easysearch.Easysearch.bulk` api accepts ``index``, ``create``,
 ``delete``, and ``update`` actions. Use the ``_op_type`` field to specify an
 action (``_op_type`` defaults to ``index``):
 
@@ -89,9 +89,9 @@ document is like ``{"word": "<myword>"}``.
 
 
 For a more complete and complex example please take a look at
-https://github.com/elastic/elasticsearch-py/blob/master/example/load.py#L76-L130
+https://github.com/infinilabs/easysearch-py/blob/master/example/load.py#L76-L130
 
-The :meth:`~elasticsearch.Elasticsearch.parallel_bulk` api is a wrapper around the :meth:`~elasticsearch.Elasticsearch.bulk` api to provide threading. :meth:`~elasticsearch.Elasticsearch.parallel_bulk` returns a generator which must be consumed to produce results.
+The :meth:`~easysearch.Easysearch.parallel_bulk` api is a wrapper around the :meth:`~easysearch.Easysearch.bulk` api to provide threading. :meth:`~easysearch.Easysearch.parallel_bulk` returns a generator which must be consumed to produce results.
 
 To see the results use:
 
@@ -113,11 +113,11 @@ If you don't care about the results, you can use deque from collections:
     When reading raw json strings from a file, you can also pass them in
     directly (without decoding to dicts first). In that case, however, you lose
     the ability to specify anything (index, type, even id) on a per-record
-    basis, all documents will just be sent to elasticsearch to be indexed
+    basis, all documents will just be sent to easysearch to be indexed
     as-is.
 
 
-.. py:module:: elasticsearch.helpers
+.. py:module:: easysearch.helpers
 
 .. autofunction:: streaming_bulk
 

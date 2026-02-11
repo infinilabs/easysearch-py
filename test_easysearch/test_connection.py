@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
-#  Licensed to Elasticsearch B.V. under one or more contributor
-#  license agreements. See the NOTICE file distributed with
-#  this work for additional information regarding copyright
-#  ownership. Elasticsearch B.V. licenses this file to you under
-#  the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License.
+#  Copyright 2021-2026 INFINI Labs
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
 #
-# 	http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-#  Unless required by applicable law or agreed to in writing,
-#  software distributed under the License is distributed on an
-#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-#  specific language governing permissions and limitations
-#  under the License.
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import re
 import ssl
@@ -29,20 +26,19 @@ from platform import python_version
 
 import pytest
 
-from elasticsearch.exceptions import (
+from easysearch.exceptions import (
     TransportError,
     ConflictError,
     RequestError,
     NotFoundError,
 )
-from elasticsearch.connection import (
+from easysearch.connection import (
     Connection,
     RequestsHttpConnection,
     Urllib3HttpConnection,
 )
-from elasticsearch import __versionstr__
+from easysearch import __versionstr__
 from .test_cases import TestCase, SkipTest
-
 
 CLOUD_ID_PORT_443 = "cluster:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbTo0NDMkZTdkZTlmMTM0NWU0NDkwMjgzZDkwM2JlNWI2ZjkxOWUk"
 CLOUD_ID_KIBANA = "cluster:d2VzdGV1cm9wZS5henVyZS5lbGFzdGljLWNsb3VkLmNvbSQ4YWY3ZWUzNTQyMGY0NThlOTAzMDI2YjQwNjQwODFmMiQyMDA2MTU1NmM1NDA0OTg2YmZmOTU3ZDg0YTZlYjUxZg=="
@@ -61,12 +57,12 @@ class TestBaseConnection(TestCase):
         con = Connection(cloud_id=CLOUD_ID_PORT_AND_KIBANA)
         self.assertEqual(
             con.host,
-            "https://c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.elastic-cloud.com:9243",
+            "https://c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.admin-cloud.com:9243",
         )
         self.assertEqual(con.port, 9243)
         self.assertEqual(
             con.hostname,
-            "c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.elastic-cloud.com",
+            "c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.admin-cloud.com",
         )
 
         # Embedded port but overridden
@@ -76,36 +72,36 @@ class TestBaseConnection(TestCase):
         )
         self.assertEqual(
             con.host,
-            "https://c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.elastic-cloud.com:443",
+            "https://c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.admin-cloud.com:443",
         )
         self.assertEqual(con.port, 443)
         self.assertEqual(
             con.hostname,
-            "c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.elastic-cloud.com",
+            "c6637f312c5243cda7ded6e99e3d2c19.westeurope.azure.admin-cloud.com",
         )
 
         # Port is 443, removed by default.
         con = Connection(cloud_id=CLOUD_ID_PORT_443)
         self.assertEqual(
             con.host,
-            "https://e7de9f1345e4490283d903be5b6f919e.westeurope.azure.elastic-cloud.com",
+            "https://e7de9f1345e4490283d903be5b6f919e.westeurope.azure.admin-cloud.com",
         )
         self.assertEqual(con.port, None)
         self.assertEqual(
             con.hostname,
-            "e7de9f1345e4490283d903be5b6f919e.westeurope.azure.elastic-cloud.com",
+            "e7de9f1345e4490283d903be5b6f919e.westeurope.azure.admin-cloud.com",
         )
 
         # No port, contains Kibana UUID
         con = Connection(cloud_id=CLOUD_ID_KIBANA)
         self.assertEqual(
             con.host,
-            "https://8af7ee35420f458e903026b4064081f2.westeurope.azure.elastic-cloud.com",
+            "https://8af7ee35420f458e903026b4064081f2.westeurope.azure.admin-cloud.com",
         )
         self.assertEqual(con.port, None)
         self.assertEqual(
             con.hostname,
-            "8af7ee35420f458e903026b4064081f2.westeurope.azure.elastic-cloud.com",
+            "8af7ee35420f458e903026b4064081f2.westeurope.azure.admin-cloud.com",
         )
 
     def test_empty_warnings(self):
@@ -120,16 +116,16 @@ class TestBaseConnection(TestCase):
         con = Connection()
 
         with warnings.catch_warnings(record=True) as warn:
-            con._raise_warnings(['299 Elasticsearch-7.6.1-aa751 "this is deprecated"'])
+            con._raise_warnings(['299 Easysearch-7.6.1-aa751 "this is deprecated"'])
 
         self.assertEqual([str(w.message) for w in warn], ["this is deprecated"])
 
         with warnings.catch_warnings(record=True) as warn:
             con._raise_warnings(
                 [
-                    '299 Elasticsearch-7.6.1-aa751 "this is also deprecated"',
-                    '299 Elasticsearch-7.6.1-aa751 "this is also deprecated"',
-                    '299 Elasticsearch-7.6.1-aa751 "guess what? deprecated"',
+                    '299 Easysearch-7.6.1-aa751 "this is also deprecated"',
+                    '299 Easysearch-7.6.1-aa751 "this is also deprecated"',
+                    '299 Easysearch-7.6.1-aa751 "guess what? deprecated"',
                 ]
             )
 
@@ -143,8 +139,8 @@ class TestBaseConnection(TestCase):
         with warnings.catch_warnings(record=True) as warn:
             con._raise_warnings(
                 [
-                    '299 Elasticsearch-7.6.1-aa751 "warning",'
-                    '299 Elasticsearch-7.6.1-aa751 "folded"',
+                    '299 Easysearch-7.6.1-aa751 "warning",'
+                    '299 Easysearch-7.6.1-aa751 "folded"',
                 ]
             )
 
@@ -228,7 +224,7 @@ class TestUrllib3Connection(TestCase):
         # test with tuple
         con = Urllib3HttpConnection(
             cloud_id="cluster:dXMtZWFzdC0xLmF3cy5mb3VuZC5pbyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5NyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5Ng==",
-            api_key=("elastic", "changeme1"),
+            api_key=("admin", "changeme1"),
         )
         self.assertEqual(
             con.headers["authorization"], "ApiKey ZWxhc3RpYzpjaGFuZ2VtZTE="
@@ -311,7 +307,7 @@ class TestUrllib3Connection(TestCase):
         con = Urllib3HttpConnection()
         self.assertEqual(
             con._get_default_user_agent(),
-            "elasticsearch-py/%s (Python %s)" % (__versionstr__, python_version()),
+            "easysearch-py/%s (Python %s)" % (__versionstr__, python_version()),
         )
 
     def test_timeout_set(self):
@@ -417,7 +413,7 @@ class TestUrllib3Connection(TestCase):
                     str(w[0].message),
                 )
 
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.logger")
     def test_uncompressed_body_logged(self, logger):
         con = self._get_mock_connection(connection_params={"http_compress": True})
         con.perform_request("GET", "/", body=b'{"example": "body"}')
@@ -432,7 +428,7 @@ class TestUrllib3Connection(TestCase):
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = self._get_mock_connection(response_body=buf)
         status, headers, data = con.perform_request("GET", "/")
-        self.assertEqual(u"你好\uda6a", data)
+        self.assertEqual("你好\uda6a", data)
 
 
 class TestRequestsConnection(TestCase):
@@ -513,7 +509,7 @@ class TestRequestsConnection(TestCase):
         # test with tuple
         con = RequestsHttpConnection(
             cloud_id="cluster:dXMtZWFzdC0xLmF3cy5mb3VuZC5pbyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5NyQ0ZmE4ODIxZTc1NjM0MDMyYmVkMWNmMjIxMTBlMmY5Ng==",
-            api_key=("elastic", "changeme1"),
+            api_key=("admin", "changeme1"),
         )
         self.assertEqual(
             con.session.headers["authorization"], "ApiKey ZWxhc3RpYzpjaGFuZ2VtZTE="
@@ -666,9 +662,9 @@ class TestRequestsConnection(TestCase):
         self.assertEqual(("username", "secret"), con.session.auth)
 
     def test_repr(self):
-        con = self._get_mock_connection({"host": "elasticsearch.com", "port": 443})
+        con = self._get_mock_connection({"host": "easysearch.com", "port": 443})
         self.assertEqual(
-            "<RequestsHttpConnection: http://elasticsearch.com:443>", repr(con)
+            "<RequestsHttpConnection: http://easysearch.com:443>", repr(con)
         )
 
     def test_conflict_error_is_returned_on_409(self):
@@ -683,14 +679,14 @@ class TestRequestsConnection(TestCase):
         con = self._get_mock_connection(status_code=400)
         self.assertRaises(RequestError, con.perform_request, "GET", "/", {}, "")
 
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.logger")
     def test_head_with_404_doesnt_get_logged(self, logger):
         con = self._get_mock_connection(status_code=404)
         self.assertRaises(NotFoundError, con.perform_request, "HEAD", "/", {}, "")
         self.assertEqual(0, logger.warning.call_count)
 
-    @patch("elasticsearch.connection.base.tracer")
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.tracer")
+    @patch("easysearch.connection.base.logger")
     def test_failed_request_logs_and_traces(self, logger, tracer):
         con = self._get_mock_connection(
             response_body=b'{"answer": 42}', status_code=500
@@ -717,8 +713,8 @@ class TestRequestsConnection(TestCase):
             )
         )
 
-    @patch("elasticsearch.connection.base.tracer")
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.tracer")
+    @patch("easysearch.connection.base.logger")
     def test_success_logs_and_traces(self, logger, tracer):
         con = self._get_mock_connection(response_body=b"""{"answer": "that's it!"}""")
         status, headers, data = con.perform_request(
@@ -757,7 +753,7 @@ class TestRequestsConnection(TestCase):
         self.assertEqual('> {"question": "what\'s that?"}', req[0][0] % req[0][1:])
         self.assertEqual('< {"answer": "that\'s it!"}', resp[0][0] % resp[0][1:])
 
-    @patch("elasticsearch.connection.base.logger")
+    @patch("easysearch.connection.base.logger")
     def test_uncompressed_body_logged(self, logger):
         con = self._get_mock_connection(connection_params={"http_compress": True})
         con.perform_request("GET", "/", body=b'{"example": "body"}')
@@ -812,7 +808,7 @@ class TestRequestsConnection(TestCase):
 
         self.assertEqual(request.headers["authorization"], "Basic dXNlcm5hbWU6c2VjcmV0")
 
-    @patch("elasticsearch.connection.base.tracer")
+    @patch("easysearch.connection.base.tracer")
     def test_url_prefix(self, tracer):
         con = self._get_mock_connection({"url_prefix": "/some-prefix/"})
         request = self._get_request(
@@ -834,4 +830,4 @@ class TestRequestsConnection(TestCase):
         buf = b"\xe4\xbd\xa0\xe5\xa5\xbd\xed\xa9\xaa"
         con = self._get_mock_connection(response_body=buf)
         status, headers, data = con.perform_request("GET", "/")
-        self.assertEqual(u"你好\uda6a", data)
+        self.assertEqual("你好\uda6a", data)
