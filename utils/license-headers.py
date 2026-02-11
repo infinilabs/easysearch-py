@@ -1,5 +1,9 @@
 #  Copyright 2021-2026 INFINI Labs
 #
+#  This file is part of Easysearch Python Client, which is derived from
+#  Elasticsearch Python Client.
+#  Copyright 2013-2020 Elasticsearch B.V.
+#
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
@@ -26,6 +30,10 @@ from itertools import chain
 lines_to_keep = ["# -*- coding: utf-8 -*-\n", "#!/usr/bin/env python\n"]
 license_header_lines = [
     "#  Copyright 2021-2026 INFINI Labs\n",
+    "#\n",
+    "#  This file is part of Easysearch Python Client, which is derived from\n",
+    "#  Elasticsearch Python Client.\n",
+    "#  Copyright 2013-2020 Elasticsearch B.V.\n",
     "#\n",
     '#  Licensed under the Apache License, Version 2.0 (the "License");\n',
     "#  you may not use this file except in compliance with the License.\n",

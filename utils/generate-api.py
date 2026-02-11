@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 #  Copyright 2021-2026 INFINI Labs
 #
+#  This file is part of Easysearch Python Client, which is derived from
+#  Elasticsearch Python Client.
+#  Copyright 2013-2020 Elasticsearch B.V.
+#
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
 #  You may obtain a copy of the License at
