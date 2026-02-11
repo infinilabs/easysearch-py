@@ -78,11 +78,11 @@ class TestJSONSerializer(TestCase):
     def test_serializes_numpy_floats(self):
         ser = JSONSerializer()
         for np_type in (
-            np.float_,
+            np.float64,  # np.float_ was removed in NumPy 2.0
             np.float32,
             np.float64,
         ):
-            self.assertRegexpMatches(
+            self.assertRegex(
                 ser.dumps({"d": np_type(1.2)}), r'^\{"d":1\.2[\d]*}$'
             )
 
