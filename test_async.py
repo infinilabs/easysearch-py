@@ -1,8 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""异步客户端测试"""
+"""异步客户端测试
+
+要运行此测试，需要先安装异步依赖：
+    pip install git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
+    pip install aiohttp
+
+或者直接安装带异步支持的版本：
+    pip install "git+https://github.com/infinilabs/easysearch-py.git@v0.1.0#egg=easysearch[async]"
+"""
 
 import asyncio
+import sys
+
+# 检查依赖
+try:
+    import aiohttp
+except ImportError:
+    print("❌ 错误: 缺少 aiohttp 依赖")
+    print("\n请安装异步依赖：")
+    print("  pip install aiohttp")
+    print("\n或者重新安装带异步支持的版本：")
+    print('  pip install "git+https://github.com/infinilabs/easysearch-py.git@v0.1.0#egg=easysearch[async]"')
+    sys.exit(1)
+
 from easysearch import AsyncEasysearch
 
 async def test_async_client():
