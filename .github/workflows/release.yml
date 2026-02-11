@@ -1,0 +1,112 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v0.1.0, v1.0.0, etc.
+
+permissions:
+  contents: write  # Required for creating releases
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine wheel setuptools
+      
+      - name: Build packages
+        run: |
+          python -m build
+          ls -lh dist/
+      
+      - name: Verify packages
+        run: |
+          twine check dist/*
+      
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Easysearch Python Client v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Easysearch Python Client v${{ steps.get_version.outputs.VERSION }}
+            
+            Official Python client for Easysearch - the open-source search and analytics engine.
+            
+            ### 📦 Installation from GitHub Release
+            
+            Download the package files below and install locally:
+            
+            **Option 1: Install wheel (recommended)**
+            ```bash
+            pip install easysearch-${{ steps.get_version.outputs.VERSION }}-py2.py3-none-any.whl
+            ```
+            
+            **Option 2: Install from source**
+            ```bash
+            pip install easysearch-${{ steps.get_version.outputs.VERSION }}.tar.gz
+            ```
+            
+            ### 🚀 Quick Start
+            
+            ```python
+            from easysearch import Easysearch
+            
+            # Connect to Easysearch
+            es = Easysearch(['http://localhost:9200'])
+            
+            # Get cluster info
+            info = es.info()
+            print(info)
+            ```
+            
+            ### 📚 Documentation
+            
+            - [GitHub Repository](https://github.com/infinilabs/easysearch-py)
+            - [Easysearch Official Site](https://easysearch.cn)
+            
+            ### 🐛 Reporting Issues
+            
+            Please report any issues on our [GitHub Issues](https://github.com/infinilabs/easysearch-py/issues) page.
+            
+            ---
+            
+            **Checksums:**
+            See assets below for SHA256 checksums.
+          files: |
+            dist/*.tar.gz
+            dist/*.whl
+          draft: false
+          prerelease: ${{ contains(steps.get_version.outputs.VERSION, 'alpha') || contains(steps.get_version.outputs.VERSION, 'beta') || contains(steps.get_version.outputs.VERSION, 'rc') }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS
+          cat SHA256SUMS
+      
+      - name: Upload checksums to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/SHA256SUMS
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
