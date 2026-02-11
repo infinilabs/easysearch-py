@@ -33,7 +33,7 @@ pip install aiohttp
 ### 1. 测试同步客户端
 
 ```bash
-python test_connection.py
+python examples/basic_usage.py
 ```
 
 **预期输出：**
@@ -49,7 +49,7 @@ python test_connection.py
 ### 2. 测试异步客户端
 
 ```bash
-python test_async.py
+python examples/async_usage.py
 ```
 
 **预期输出：**
