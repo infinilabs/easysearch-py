@@ -1,6 +1,10 @@
 Python Easysearch Client
 =========================
 
+.. note::
+    This library is derived from `elasticsearch-py <https://github.com/elastic/elasticsearch-py>`_ 7.10.1,
+    Copyright 2013-2020 Elasticsearch B.V., and is now maintained by INFINI Labs.
+
 Official Python client for INFINI Easysearch. Its goal is to provide common
 ground for all Easysearch-related code in Python; because of this it tries
 to be opinion-free and very extendable.
