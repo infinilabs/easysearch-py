@@ -1,8 +1,9 @@
 #!/bin/bash
-# 测试脚本
+# 完整测试脚本
+cd "$(dirname "$0")"
 
 # 激活虚拟环境
-source venv/bin/activate
+source ../venv/bin/activate 2>/dev/null || echo "提示: 建议创建虚拟环境"
 
 echo "==============================================="
 echo "安装测试依赖..."
@@ -13,11 +14,13 @@ echo ""
 echo "==============================================="
 echo "测试 1: 基本连接测试"
 echo "==============================================="
-python test_connection.py
+python basic_usage.py
 
 echo ""
 echo "==============================================="
 echo "测试 2: 异步客户端测试"
+echo "==============================================="
+python async_usage.py
 echo "==============================================="
 python << 'PYEOF'
 import asyncio
