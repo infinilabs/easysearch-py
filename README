@@ -22,28 +22,18 @@ the ``async`` extra::
 
     $ pip install "easysearch[async]"
 
-Alternatively, you can install a specific version directly from GitHub Releases::
-
-    $ pip install https://github.com/infinilabs/easysearch-py/releases/download/v0.1.0/easysearch-0.1.0-py2.py3-none-any.whl
+Alternatively, you can download and install the latest version directly from the `GitHub Releases <https://github.com/infinilabs/easysearch-py/releases>`_ page.
 
 
 Compatibility
 -------------
 
-The library is compatible with Easysearch 1.x and 2.x versions.
-
-For **Easysearch 1.x**, use the major version 1 (``1.x.y``) of the library.
-
-For **Easysearch 2.x**, use the major version 2 (``2.x.y``) of the library.
+The library is currently in the ``0.x`` release series and is compatible with INFINI Easysearch. 
 
 The recommended way to set your requirements in your ``setup.py`` or
-``requirements.txt`` is::
+``requirements.txt`` is to pin the version to ensure stability. For example::
 
-    # Easysearch 2.x
-    easysearch>=2.0.0,<3.0.0
-
-    # Easysearch 1.x
-    easysearch>=1.0.0,<2.0.0
+    easysearch>=0.1.0
 
 
 Example use

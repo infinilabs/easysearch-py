@@ -1,20 +1,42 @@
 # Installation Guide
 
-This guide explains how to install the Easysearch Python Client.
+This guide explains how to install the Easysearch Python Client. 
 
 ## Table of Contents
 
-- [Install Directly from GitHub (Easiest)](#install-directly-from-github-easiest)
+-[Standard Installation (Recommended)](#standard-installation-recommended)
+- [Install Directly from GitHub](#install-directly-from-github)
 - [Install from GitHub Releases](#install-from-github-releases)
-- [Install from Source](#install-from-source)
-- [Install from PyPI](#install-from-pypi)
+-[Install from Source (For Developers)](#install-from-source-for-developers)
 - [Verify Installation](#verify-installation)
+- [Offline Installation](#offline-installation)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## Install Directly from GitHub (Easiest)
+## Standard Installation (Recommended)
 
-You can install directly from GitHub using pip, no need to download files manually!
+The easiest and recommended way to install the Easysearch client is via pip from PyPI.
+
+### Basic Installation (Synchronous Client)
+
+```bash
+pip install easysearch
+```
+
+### Async Installation (Recommended for Asyncio users)
+
+If your application uses `async`/`await`, install the package with the `async` extra to automatically pull in required dependencies like `aiohttp`:
+
+```bash
+pip install "easysearch[async]"
+```
+
+---
+
+## Install Directly from GitHub
+
+You can install directly from the GitHub repository using pip. This is useful if you need unreleased features, specific bug fixes, or want to test a specific commit.
 
 ### Install from Latest Code (main branch)
 
@@ -22,192 +44,133 @@ You can install directly from GitHub using pip, no need to download files manual
 pip install git+https://github.com/infinilabs/easysearch-py.git
 ```
 
-### Install from Specific Version Tag
+### Install from Specific Version or Branch
+
+You can target a specific release tag or branch by appending `@<TAG_OR_BRANCH>`.
 
 ```bash
-# Install version 0.1.0
-pip install git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
+# Target a specific version tag (e.g., v0.1.0)
+pip install git+https://github.com/infinilabs/easysearch-py.git@vX.Y.Z
 
-# Install version 0.2.0
-pip install git+https://github.com/infinilabs/easysearch-py.git@v0.2.0
-```
-
-### Install from Specific Branch
-
-```bash
-# Install from develop branch
+# Target a specific branch (e.g., develop)
 pip install git+https://github.com/infinilabs/easysearch-py.git@develop
-```
 
-### Install from Specific Commit
-
-```bash
+# Target a specific commit hash
 pip install git+https://github.com/infinilabs/easysearch-py.git@abc1234
 ```
 
-### Using requirements.txt
+### Using `requirements.txt`
 
-Add to your `requirements.txt`:
+Add the following to your `requirements.txt`:
 
 ```txt
 # Latest from main branch
 git+https://github.com/infinilabs/easysearch-py.git
 
-# Or specific version
-git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
-
-# Or with egg name for reference
-git+https://github.com/infinilabs/easysearch-py.git@v0.1.0#egg=easysearch
+# Or specific version tag
+git+https://github.com/infinilabs/easysearch-py.git@vX.Y.Z#egg=easysearch
 ```
-
-Then install:
-```bash
-pip install -r requirements.txt
-```
-
-### Advantages
-
-✅ **No manual download needed** - pip handles everything  
-✅ **Always up-to-date** - install latest or pin specific versions  
-✅ **Works in CI/CD** - perfect for automated deployments  
-✅ **No PyPI dependency** - works even if PyPI has issues  
-✅ **Easy to upgrade** - just change the version tag
 
 ---
 
 ## Install from GitHub Releases
 
-You can download pre-built packages from [GitHub Releases](https://github.com/infinilabs/easysearch-py/releases), or install directly from release URLs.
+You can download pre-built packages from the [GitHub Releases](https://github.com/infinilabs/easysearch-py/releases) page.
 
-### Option A: Install Directly from Release URL (No Download Needed)
+### Option A: Install Directly from Release URL
+
+You can pass the `.whl` URL directly to pip (replace `X.Y.Z` with the actual version):
 
 ```bash
-# Install wheel from GitHub Release (recommended)
-pip install https://github.com/infinilabs/easysearch-py/releases/download/v0.1.0/easysearch-0.1.0-py2.py3-none-any.whl
-
-# Or install source package
-pip install https://github.com/infinilabs/easysearch-py/releases/download/v0.1.0/easysearch-0.1.0.tar.gz
+# Install wheel from GitHub Release
+pip install https://github.com/infinilabs/easysearch-py/releases/download/vX.Y.Z/easysearch-X.Y.Z-py2.py3-none-any.whl
 ```
-
-Replace `v0.1.0` and `0.1.0` with the version you want.
 
 ### Option B: Download and Install Locally
 
-#### Step 1: Download the Package
-
-Visit the [releases page](https://github.com/infinilabs/easysearch-py/releases) and download either:
-- `easysearch-X.Y.Z-py2.py3-none-any.whl` (wheel package, recommended)
-- `easysearch-X.Y.Z.tar.gz` (source package)
-
-Replace `X.Y.Z` with the version number (e.g., `0.1.0`).
-
-#### Step 2: Install the Downloaded Package
-
-**Option 1: Install wheel package (faster)**
-```bash
-pip install easysearch-0.1.0-py2.py3-none-any.whl
-```
-
-**Option 2: Install source package**
-```bash
-pip install easysearch-0.1.0.tar.gz
-```
-
-#### Step 3: Verify Checksums (Optional but Recommended)
-
-Download the `SHA256SUMS` file from the same release page:
+1. Visit the[releases page](https://github.com/infinilabs/easysearch-py/releases) and download the `.whl` (wheel) or `.tar.gz` (source) file.
+2. Install the downloaded package:
 
 ```bash
-# Verify the checksum
-sha256sum -c SHA256SUMS
+# Install wheel package (faster)
+pip install easysearch-X.Y.Z-py2.py3-none-any.whl
+
+# Or install source package
+pip install easysearch-X.Y.Z.tar.gz
 ```
 
 ---
 
-## Install from Source
+## Install from Source (For Developers)
 
-Clone the repository and install:
+If you plan to contribute to the project or run tests, you should install it in editable mode:
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/infinilabs/easysearch-py.git
 cd easysearch-py
 
-# Install in development mode
+# 2. Install in development/editable mode
 pip install -e .
 
-# Or build and install
-python -m build
-pip install dist/easysearch-*.whl
-```
-
----
-
-## Install from PyPI
-
-> **Note:** PyPI package name may differ due to naming conflicts. Check the latest instructions in the README.
-
-```bash
-# When available on PyPI
-pip install easysearch-py
+# 3. (Optional) Install with async and testing dependencies
+pip install -e ".[async]"
+pip install pytest pytest-cov
 ```
 
 ---
 
 ## Verify Installation
 
-After installation, verify that the package is installed correctly:
+After installation, verify that the package is installed correctly in your Python environment:
 
 ```bash
-python -c "from easysearch import Easysearch; print('Easysearch client installed successfully!')"
+python -c "import easysearch; print(f'Easysearch client installed successfully! Version: {easysearch.__version__}')"
 ```
 
-### Quick Test
+### Quick Test Connection
 
 ```python
 from easysearch import Easysearch
 
-# Connect to your Easysearch instance
-es = Easysearch(['http://localhost:9200'])
+# Connect to your Easysearch instance (adjust URL and credentials as needed)
+es = Easysearch(['https://localhost:9200'],
+    http_auth=('admin', 'password'),
+    verify_certs=False, # Disable in dev only
+    ssl_show_warn=False
+)
 
 # Get cluster information
 info = es.info()
-print(info)
+print(f"Connected to cluster: {info.get('cluster_name')}")
 ```
 
 ---
 
 ## Requirements
 
-- **Python:** 3.6 or higher (Python 2.7 and 3.4+ are supported, but 3.6+ recommended)
-- **Dependencies:**
+- **Python:** 3.6 or higher recommended.
+- **Dependencies (Automatically installed by pip):**
   - `urllib3>=1.21.1,<2`
   - `certifi`
-  - `aiohttp>=3` (for async support, Python 3.6+ only)
-
-Dependencies are automatically installed by pip.
+  - `aiohttp>=3` (Required only for async support)
 
 ---
 
 ## Offline Installation
 
-For environments without internet access:
+For enterprise environments without internet access:
 
-### Step 1: Download packages on a machine with internet
-
+**Step 1: Download packages on a machine with internet access**
 ```bash
-# Download the package and all dependencies
+# Download the package and all its dependencies
 pip download easysearch -d /path/to/packages/
 ```
 
-Or download from GitHub Releases manually.
+**Step 2: Transfer to the offline machine**
+Copy the `/path/to/packages/` directory to your target offline machine.
 
-### Step 2: Transfer to offline machine
-
-Copy the packages directory to your offline machine.
-
-### Step 3: Install offline
-
+**Step 3: Install offline**
 ```bash
 pip install --no-index --find-links=/path/to/packages/ easysearch
 ```
@@ -216,38 +179,26 @@ pip install --no-index --find-links=/path/to/packages/ easysearch
 
 ## Troubleshooting
 
-### SSL Certificate Verification Errors
-
-If you encounter SSL certificate errors:
+### SSL Certificate Verification Errors (`SSLError`)
+If you encounter SSL errors when connecting to a local/testing cluster with self-signed certificates, adjust your connection parameters:
 
 ```python
-from easysearch import Easysearch
-
 es = Easysearch(
     ['https://localhost:9200'],
     use_ssl=True,
-    verify_certs=False,  # Disable certificate verification (development only)
+    verify_certs=False,  # Set to True in Production!
     ssl_show_warn=False
 )
 ```
 
-**Warning:** Only disable certificate verification in development environments.
-
-### ImportError
-
-If you get `ImportError: No module named 'easysearch'`:
-
-1. Verify installation: `pip list | grep easysearch`
-2. Check Python version: `python --version`
-3. Ensure you're using the correct Python environment
+### `ImportError: No module named 'easysearch'`
+1. Verify the package is listed: `pip list | grep easysearch`
+2. Ensure you're installing into the correct Python environment (Virtualenv/Conda).
+3. Check your Python version: `python --version`
 
 ### Connection Refused
-
-If you cannot connect to Easysearch:
-
-1. Verify Easysearch is running: `curl http://localhost:9200`
-2. Check the host and port in your connection string
-3. Verify firewall settings
+1. Verify Easysearch is actually running: `curl -k https://localhost:9200`
+2. Double-check the host, port, and scheme (`http` vs `https`) in your connection string.
 
 ---
 
@@ -263,7 +214,6 @@ pip uninstall easysearch
 
 ## Next Steps
 
-- Read the [Quick Start Guide](README.rst)
-- Check [API Documentation](docs/index.asciidoc)
-- View [Examples](examples/)
-- Report issues on [GitHub](https://github.com/infinilabs/easysearch-py/issues)
+- Read the [README](README.rst)
+- View usage scripts in the [Examples](examples/) directory
+- Report issues or contribute on [GitHub](https://github.com/infinilabs/easysearch-py)

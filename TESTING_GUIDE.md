@@ -1,141 +1,150 @@
-# 测试指南
+# Testing Guide
 
-本目录包含测试脚本，用于验证 Easysearch Python 客户端的功能。
+This guide will help you quickly verify the connection status of the Easysearch Python client (both synchronous and asynchronous), as well as how to run the complete test suite.
 
-## 前置要求
+## 📋 Prerequisites
 
-1. **运行的 Easysearch 服务器**
-   - 地址: https://localhost:9200
-   - 认证: admin 用户及密码
-   - SSL: 启用（测试中禁用证书验证）
+Before running tests, please ensure:
 
-2. **安装客户端**
+1. **A Running Easysearch Server**
+   - Default address: `https://localhost:9200`
+   - Default authentication: `admin` user with corresponding password
+   - SSL configuration: Should be enabled (certificate verification is disabled by default in local test examples)
 
-### 基础安装（同步客户端）
+2. **Python Environment**
+   - Python 3.6+ is recommended
+
+---
+
+## ⚙️ Installing the Client
+
+Choose the installation method that best fits your use case:
+
+### Method 1: Standard Installation (⭐⭐⭐ Recommended for Quick Testing & Production Use)
+
+The simplest way is to install the released version directly via `pip`:
 
 ```bash
-pip install git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
+# Basic installation (synchronous client)
+pip install easysearch
+
+# Install with async support (recommended)
+pip install "easysearch[async]"
 ```
 
-### 带异步支持的安装
+### Method 2: Source Installation (For Development & Running Pytest Tests)
+
+If you have cloned this repository and want to modify code or run low-level unit tests, we recommend installing in editable mode from the project root:
 
 ```bash
-# 方式 1: 使用 [async] extra
-pip install "git+https://github.com/infinilabs/easysearch-py.git@v0.1.0#egg=easysearch[async]"
-
-# 方式 2: 手动安装依赖
-pip install git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
-pip install aiohttp
+pip install -e .
+# Or with async dependencies:
+pip install -e ".[async]"
 ```
 
-## 运行测试
+---
 
-### 1. 测试同步客户端
+## 🚀 Running Basic Tests (Verify Connectivity)
+
+If you have cloned this repository, you can directly run the example scripts in the `examples` directory to verify that the client can communicate with Easysearch normally:
+
+### 1. Test Synchronous Client
 
 ```bash
 python examples/basic_usage.py
 ```
 
-**预期输出：**
-```
-正在连接到 Easysearch...
-✅ 连接成功!
-集群: easysearch
-版本: 2.0.3
+**Expected Output:**
+```text
+Connecting to Easysearch...
+✅ Connection successful!
+Cluster: easysearch
+Version: 2.x.x
 ...
-🎉 所有测试通过!
+🎉 All tests passed!
 ```
 
-### 2. 测试异步客户端
+### 2. Test Asynchronous Client
 
 ```bash
 python examples/async_usage.py
 ```
 
-**预期输出：**
-```
-正在测试异步客户端...
-✅ 异步连接成功!
-集群: easysearch
-版本: 2.0.3
+**Expected Output:**
+```text
+Testing asynchronous client...
+✅ Async connection successful!
+Cluster: easysearch
 ...
-🎉 所有异步测试通过!
+🎉 All async tests passed!
 ```
 
-## 常见问题
+*(Note: If you haven't cloned the repository, you can create a Python file locally and copy the code from `examples/basic_usage.py` in the repository for testing.)*
 
-### 问题 1: ModuleNotFoundError: No module named 'urllib3'
+---
 
-**原因：** 基础依赖未安装
+## 🧪 Running the Full Unit Test Suite (Pytest)
 
-**解决：**
+> **Note:** This step is only applicable to users who chose **Method 2 (Source Installation)**.
+
+If you want to run the full unit tests and coverage checks, please ensure you have installed all test dependencies:
+
 ```bash
-pip install urllib3 certifi
-# 或者重新安装客户端
-pip install git+https://github.com/infinilabs/easysearch-py.git@v0.1.0
+# Install test dependencies
+pip install pytest pytest-cov numpy pandas
+
+# Run all tests with verbose output
+pytest test_easysearch/ -v
+
+# Run tests for a specific module
+pytest test_easysearch/test_serializer.py -v
 ```
 
-### 问题 2: ImportError: cannot import name 'AsyncEasysearch'
+---
 
-**原因：** 缺少异步依赖 aiohttp
+## 🔧 Modifying Test Configuration
 
-**解决：**
-```bash
-pip install aiohttp
-# 或者使用 async extra 重新安装
-pip install "git+https://github.com/infinilabs/easysearch-py.git@v0.1.0#egg=easysearch[async]"
-```
-
-### 问题 3: ConnectionError: Connection refused
-
-**原因：** Easysearch 服务器未运行或地址不正确
-
-**解决：**
-1. 确保 Easysearch 正在运行
-2. 验证地址：`curl -k https://localhost:9200`
-3. 检查认证信息是否正确
-
-### 问题 4: SSLError: certificate verify failed
-
-**原因：** SSL 证书验证失败
-
-**解决：**
-- 测试脚本已禁用证书验证 (`verify_certs=False`)
-- 生产环境请使用有效证书或配置 CA 证书
-
-## 修改测试配置
-
-如果你的 Easysearch 服务器配置不同，请修改测试脚本中的连接参数：
+If your Easysearch server is not running locally, or if you have different credentials, please modify the following connection parameters in your test code:
 
 ```python
+from easysearch import Easysearch
+
 es = Easysearch(
-    ['https://your-host:9200'],  # 修改地址
-    http_auth=('your-user', 'your-password'),  # 修改认证
+    ['https://your-host:9200'],                # Update to your actual server address
+    http_auth=('your-user', 'your-password'),  # Update to your actual credentials
     use_ssl=True,
-    verify_certs=False,  # 生产环境建议改为 True
+    verify_certs=False,                        # Recommended to set True in production with proper CA certificates
     ssl_show_warn=False
 )
 ```
 
-## 完整测试套件
+---
 
-要运行完整的测试套件（需要 pytest）：
+## ❓ Frequently Asked Questions (FAQ)
 
-```bash
-# 安装测试依赖
-pip install -e .
-pip install pytest pytest-cov numpy pandas
+### ❌ Issue 1: `ModuleNotFoundError: No module named 'urllib3'`
+**Cause:** Core network dependencies were not installed completely.
+**Solution:** Re-run `pip install easysearch` to ensure all dependencies are downloaded properly.
 
-# 运行所有测试
-pytest test_easysearch/ -v
+### ❌ Issue 2: `ImportError: cannot import name 'AsyncEasysearch'`
+**Cause:** Missing async dependencies (e.g., `aiohttp`).
+**Solution:** Run `pip install aiohttp` or use `pip install "easysearch[async]"` to install async support.
 
-# 运行特定测试
-pytest test_easysearch/test_serializer.py -v
-pytest test_easysearch/test_connection_pool.py -v
-```
+### ❌ Issue 3: `ConnectionError: Connection refused`
+**Cause:** The server is not running, or the connection address/port is incorrect.
+**Solution:**
+1. Ensure the Easysearch process is running normally.
+2. Verify address connectivity: Run `curl -k https://localhost:9200` in terminal.
+3. Check that the `http_auth` credentials in your code are accurate.
 
-## 更多信息
+### ❌ Issue 4: `SSLError: certificate verify failed`
+**Cause:** SSL certificate verification failed.
+**Solution:** Example scripts typically configure `verify_certs=False` to ignore self-signed certificates. If errors occur in production, set `verify_certs=True` and provide the correct `ca_certs` path.
 
-- [安装指南](INSTALL.md)
-- [GitHub 仓库](https://github.com/infinilabs/easysearch-py)
-- [Easysearch 官网](https://easysearch.cn)
+---
+
+## 📚 More Information
+
+- [Installation Guide](INSTALL.md)
+- [GitHub Repository](https://github.com/infinilabs/easysearch-py)
+- [INFINI Easysearch Official Website](https://easysearch.cn)
